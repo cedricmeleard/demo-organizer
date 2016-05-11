@@ -12,8 +12,8 @@ function route(app) {
     app.use(passport.session());
 
     var config = {
-        GOOGLE_CLIENT_ID: "390863276942-ha3onskmmj98p7058e4li3pe29sr7905.apps.googleusercontent.com",
-        GOOGLE_CLIENT_SECRET: "z4S0NdKFU5jgc635lDrGm0gQ",
+        GOOGLE_CLIENT_ID: "--client-id--",
+        GOOGLE_CLIENT_SECRET: "--client secret--",
         GOOGLE_CALLBACK_URL: "http://localhost:81/oauth2callback"
     };
     var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
