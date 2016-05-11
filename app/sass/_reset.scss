@@ -1,0 +1,22 @@
+html,
+body,
+ul,
+ol,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+a, a:hover, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  background: none;
+  font-size: 3em;
+  color: $accent-color;
+}
