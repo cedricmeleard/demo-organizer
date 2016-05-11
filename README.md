@@ -14,7 +14,9 @@ this project depends on nodejs, it use express, socket.io and passport (google a
 it also depends on ruby and particularly no sass (here it's scss) for css compile.
 
 therefore you'll to install nodejs : [Nodejs](https://nodejs.org/en/)
+
 ruby : [ruby](https://www.ruby-lang.org/fr/)
+
 and sass : [Sass](http://sass-lang.com/install)
 
 
@@ -22,9 +24,11 @@ and sass : [Sass](http://sass-lang.com/install)
 
 Once everything is set up
 run
+
     npm install
 
 then
+
     npm start
 
 ## Use
