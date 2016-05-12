@@ -34,12 +34,14 @@ then
 ## Use
 
 You need to connect using google account, then there is 2 pages you can access.
-by default server start listening on port 81
+by default server start listening on port 81 (see index.js)
+then my google code config is set for a callback url on localhost:81 to, those things needs to be change with
+your own values
 
-### /
+### http://localhost:81/
 root access, where you can see item and modify them
 
-### /create
+### http://localhost:81/create
 allow a user to add a new item
 
 ## What's next?
