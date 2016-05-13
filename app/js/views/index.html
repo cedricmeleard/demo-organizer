@@ -24,27 +24,8 @@
             <button type="button" data-bind="click : $parent.moveUp"><i class="material-icons">keyboard_arrow_up</i></button>
             <button type="button" data-bind="click : $parent.moveDown"><i class="material-icons">keyboard_arrow_down</i></button>
         </div>
-        <div class="content">
-            <h2>
-                <span class="content__content-title" data-bind="text : source + ' - '"></span>
-                <span class="content__content-title" data-bind="text : text"></span>
-            </h2>
-            <div class="content__form-group">
-                <textarea class="form-control" rows="4" placeholder="Entrer la description" data-bind="value : description"></textarea>
-            </div>
-            <!-- ko ifnot: affectedUser -->
-            <button type="button" data-bind="click : $parent.affect"><i class="material-icons">thumb_up</i></button>
-            <!-- /ko -->
-            <!-- ko if: affectedUser -->
-            <div class="user">
-                <!-- ko with: affectedUser-->
-                <img class="user-img" data-bind="attr : { src: photo }" />
-                <label class="user-name" data-bind="text : name" ></label>
-                <!-- /ko -->
-                <button type="button" data-bind="click : $parent.unAffect"><i class="material-icons">thumb_down</i></button>
-            </div>
-            <!-- /ko -->
-        </div>
+        <div class="content"
+             data-bind="component : { name : 'item-demo', params : { item : $data, user : $root.user } }"></div>
         <div class="actions">
             <button type="button" data-bind="click : $parent.delete"><i class="material-icons">delete</i></button>
         </div>

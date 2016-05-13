@@ -28,14 +28,19 @@ html, body, ul, li {
     flex-direction: row;
 
     &-img {
-      @include small-img();
+      @include xsmall-img();
     }
 
     &-name {
       padding-left: 10px;
+      font-size: 1.2em;
+      height: 30px;
+      line-height: 30px;
+    }
+
+    .material-icons {
       font-size: 1.5em;
-      height: 50px;
-      line-height: 50px;
+      line-height: 30px;
     }
   }
 
@@ -52,6 +57,16 @@ html, body, ul, li {
     @include border-radius(27px);
     padding: 2px 16px 2px 2px;
 
+    .user-img {
+      @include small-img();
+    }
+
+    .user-name {
+      padding-left: 10px;
+      font-size: 1.5em;
+      height: 50px;
+      line-height: 50px;
+    }
   }
 
   .item {
@@ -69,6 +84,10 @@ html, body, ul, li {
       display: flex;
       flex-direction: column;
       align-content: space-around;
+
+      button {
+        font-size: 2em;
+      }
     }
 
     .content {
