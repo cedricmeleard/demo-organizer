@@ -11,6 +11,7 @@ function route(app) {
     app.use(passport.initialize());
     app.use(passport.session());
 
+
     var config = {
         GOOGLE_CLIENT_ID: "--client-id--",
         GOOGLE_CLIENT_SECRET: "--client secret--",
@@ -47,23 +48,34 @@ function route(app) {
     );
 
     app.get('/oauth2callback', passport.authenticate('google',
-        { successRedirect: '/', failureRedirect: '/login' }
+        {successRedirect: '/home', failureRedirect: '/login'}
     ));
-
-    function ensureAuthenticated(req, res, next) {
-        if (req.isAuthenticated()) { return next(); }
-        res.redirect('/login');
-    }
-
-    app.use('/',ensureAuthenticated);
-    app.use('/create',ensureAuthenticated);
 
     app.engine('html', require('ejs').renderFile);
 
+    function publicViewable(req, res, next) {
+        return next();
+    }
+
+    app.use('/print', publicViewable);
+    app.get('/print', function (req, res) {
+        res.render(__dirname + '/views/print.html');
+    });
+
+    function ensureAuthenticated(req, res, next) {
+        if (req.isAuthenticated()) {
+            return next();
+        }
+        res.redirect('/login');
+    }
+
+    app.use('/home', ensureAuthenticated);
     //serve user view, this will display quiz
-    app.get('/', function (req, res) {
+    app.get('/home', function (req, res) {
         res.render(__dirname + '/views/index.html', { user : JSON.stringify( new User(req.user) ) } );
     });
+
+    app.use('/create', ensureAuthenticated);
     app.get('/create', function (req, res) {
         res.render(__dirname + '/views/create.html', { user : JSON.stringify( new User(req.user) ) } );
     });
