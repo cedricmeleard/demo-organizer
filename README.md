@@ -38,11 +38,14 @@ by default server start listening on port 81 (see index.js)
 then my google code config is set for a callback url on localhost:81 to, those things needs to be change with
 your own values
 
-### http://localhost:81/
+### http://localhost:81/home
 root access, where you can see item and modify them
 
 ### http://localhost:81/create
 allow a user to add a new item
+
+### http://localhost:81/print
+allow an unauthenticated user to see what's going on
 
 ## What's next?
 
