@@ -5,6 +5,7 @@
 html, body, ul, li {
   background: $background-color;
   color: $item-background;
+  font-family: $font-stack;
 }
 
 .material-icons {
@@ -115,6 +116,12 @@ html, body, ul, li {
         }
       }
     }
+
+  }
+
+  .search-text {
+    max-width: 150px;
+    padding: 5px;
 
   }
 }

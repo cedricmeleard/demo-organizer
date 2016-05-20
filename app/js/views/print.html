@@ -9,7 +9,12 @@
 </head>
 <body>
 <div class="container" id="organizerContainer">
-    <div><h1>Votre démo</h1></div>
+    <div>
+        <h1>Votre démo</h1>
+        <input class="search-text" type="text" data-bind="value : search, valueUpdate : 'input'"
+               placeholder="Filter sur le n° de ticket"/>
+    </div>
+
     <!-- ko foreach : tickets -->
     <div class="item">
         <div class="content"

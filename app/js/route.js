@@ -13,9 +13,9 @@ function route(app) {
 
 
     var config = {
-        GOOGLE_CLIENT_ID: "--client-id--",
-        GOOGLE_CLIENT_SECRET: "--client secret--",
-        GOOGLE_CALLBACK_URL: "http://localhost:81/oauth2callback"
+        GOOGLE_CLIENT_ID: "586202241803-io865h050t03q63hikv7o2i7lpta9b91.apps.googleusercontent.com",
+        GOOGLE_CLIENT_SECRET: "rDnj-nIvWCpZE54B4ZKtAgpT",
+        GOOGLE_CALLBACK_URL: "http://syfadis76.condate.com:81/oauth2callback"
     };
     var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 

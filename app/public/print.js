@@ -9,13 +9,24 @@
         var self = this;
         socket.emit('connect');
 
+        self.search = ko.observable('');
         self.items = ko.observableArray();
+
         self.tickets = ko.computed(function () {
             var tickets = self.items.sort(
                 function (left, right) {
-                    return left.position == right.position ? 0 : (left.position < right.position ? -1 : 1)
+                    return left.position() == right.position() ? 0 : (left.position() < right.position() ? -1 : 1)
                 });
-            return tickets();
+
+            var sourceId = self.search();
+
+            var result = ko.utils.arrayFilter(tickets(), function (item) {
+                if (!sourceId) return tickets();
+
+                return item.source().indexOf(sourceId) != -1;
+            });
+
+            return result;
         });
 
         socket.on('send items', function (items) {
