@@ -10,13 +10,8 @@ function route(app) {
     // persistent login sessions (recommended).
     app.use(passport.initialize());
     app.use(passport.session());
-
-
-    var config = {
-        GOOGLE_CLIENT_ID: "--client-id--",
-        GOOGLE_CLIENT_SECRET: "--client secret--",
-        GOOGLE_CALLBACK_URL: "http://localhost:81/oauth2callback"
-    };
+    //load configuration client_Id and client_Secret
+    var config = require('./config').googleAuth;
     var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
     passport.use(new GoogleStrategy({
@@ -56,7 +51,6 @@ function route(app) {
     function publicViewable(req, res, next) {
         return next();
     }
-
     app.use('/print', publicViewable);
     app.get('/print', function (req, res) {
         res.render(__dirname + '/views/print.html');
@@ -78,6 +72,11 @@ function route(app) {
     app.use('/create', ensureAuthenticated);
     app.get('/create', function (req, res) {
         res.render(__dirname + '/views/create.html', { user : JSON.stringify( new User(req.user) ) } );
+    });
+
+    app.use('/users', ensureAuthenticated);
+    app.get('/users', function (req, res) {
+        res.render(__dirname + '/views/users.html', { user : JSON.stringify( new User(req.user) ) } );
     });
 
     function User(user) {

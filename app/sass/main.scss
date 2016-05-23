@@ -29,7 +29,7 @@ html, body, ul, li {
     flex-direction: row;
 
     &-img {
-      @include xsmall-img();
+      @include round-img(30px);
     }
 
     &-name {
@@ -51,22 +51,32 @@ html, body, ul, li {
     z-index: 1;
     top: 16px;
     right: 16px;
-
     background: $item-background;
     color: $accent-color;
+    transition: all .3s linear;
+    padding: 2px;
 
     @include border-radius(27px);
-    padding: 2px 16px 2px 2px;
 
     .user-img {
-      @include small-img();
+      @include round-img(50px);
     }
 
     .user-name {
-      padding-left: 10px;
+      overflow: hidden;
+      padding-left: 0px;
       font-size: 1.5em;
       height: 50px;
       line-height: 50px;
+      width:0px;
+    }
+    &:hover {
+      padding-right: 16px;
+
+      .user-name {
+        width: inherit;
+        padding-left: 10px;
+      }
     }
   }
 

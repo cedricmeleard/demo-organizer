@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "install": "sass --watch app/sass:app/public/css &",
+    "test": "karma start karma.conf.js --reporters progress",
+    "prestart": "sass --watch app/sass:app/public/css &",
     "start": "node app/index.js"
   },
   "dependencies": {
@@ -14,9 +15,21 @@
     "express": "^4.13.3",
     "express-session": "^1.13.0",
     "jquery": "^2.2.3",
+    "knockout": "^3.4.0",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "passport-google-oauth2": "^0.1.6",
     "socket.io": "^1.3.7"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.8",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-requirejs": "^1.0.0",
+    "phantomjs": "^2.1.7",
+    "requirejs": "^2.2.0"
   }
 }

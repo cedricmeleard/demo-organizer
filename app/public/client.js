@@ -7,9 +7,10 @@
 
     function Organizer() {
         var self = this;
-        socket.emit('connect');
         //load user from input and set it to model
         self.user = ko.observable(JSON.parse($("#usrInfo").val()));
+
+        socket.emit('user connected', ko.toJS(self.user) );
 
         self.items = ko.observableArray();
         self.tickets = ko.computed(function () {
