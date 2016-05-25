@@ -47,6 +47,9 @@ allow a user to add a new item
 ### http://localhost:81/print
 allow an unauthenticated user to see what's going on
 
+### http://localhost:81/users
+display actually connected users
+
 ## What's next?
 
 App is in her first stage developpment, many things are still todos and other need refactoring.
