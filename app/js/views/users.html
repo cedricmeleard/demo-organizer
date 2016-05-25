@@ -11,17 +11,17 @@
 <input id="usrInfo" type="hidden" value='<%- user %>'/>
 
 <div class="container" id="organizerContainer">
-    <div><h1>Utilisateurs connectés</h1></div>
-    <!-- ko if : user -->
-    <div class="user-top" data-bind="with : user">
-        <img class="user-img" data-bind="attr : { src: photo }" />
-        <label class="user-name" data-bind="text : name" />
+    <div class="header">
+        <side-nav class="side-nav"></side-nav>
+        <h1>Utilisateurs connectés</h1>
     </div>
-    <!-- /ko -->
+    <!-- ko component : { name : 'user-connect', params : { user : user, callback : disconnect } } --><!-- /ko -->
     <div class="users">
-    <!-- ko foreach : users -->
-        <user-item params="user : $data"></user-item>
-    <!-- /ko -->
+        <ul data-bind="foreach: users">
+            <li class="user-connected">
+                <user-item params="user : $data"></user-item>
+            </li>
+        </ul>
     </div>
 </div>
 <!-- depedencies -->
@@ -29,6 +29,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
+<script src="components.js"></script>
 <script src="users.js"></script>
 </body>
 </html>

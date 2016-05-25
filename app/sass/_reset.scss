@@ -5,6 +5,7 @@ ol,
 li {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 a, a:hover, a:visited {
@@ -16,4 +17,5 @@ button {
   border: none;
   background: none;
   color: $accent-color;
+  cursor: pointer;
 }

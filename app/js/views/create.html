@@ -8,8 +8,15 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+<input id="usrInfo" type="hidden" value='<%- user %>'/>
+
 <div class="container">
-    <div><h1>Ajouter un nouvel item</h1></div>
+    <div class="header">
+        <side-nav class="side-nav"></side-nav>
+        <h1>Ajouter un nouvel item</h1>
+    </div>
+    <!-- ko component : { name : 'user-connect', params : { user : user, callback : disconnect } } -->
+    <!-- /ko -->
     <div class="item">
         <div class="content">
             <div class="content__form-group">
@@ -29,10 +36,11 @@
     </div>
 </div>
 <!-- depedencies -->
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
+<script src="components.js"></script>
 <script src="create.js"></script>
 </body>
 </html>

@@ -1,0 +1,62 @@
+
+.user {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+
+  &-connected {
+    margin: 16px auto;
+
+  }
+
+  &-img {
+    @include round-img(30px);
+  }
+
+  &-name {
+    padding-left: 10px;
+    font-size: 1.2em;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .material-icons {
+    font-size: 1.5em;
+    line-height: 30px;
+  }
+}
+
+.user-top {
+  @extend .user;
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  right: 16px;
+  background: $item-background;
+  color: $accent-color;
+  transition: all .3s linear;
+  padding: 2px;
+
+  @include border-radius(27px);
+
+  .user-img {
+    @include round-img(50px);
+  }
+
+  .user-name {
+    overflow: hidden;
+    padding-left: 0px;
+    font-size: 1.5em;
+    height: 50px;
+    line-height: 50px;
+    width: 0px;
+  }
+  &:hover {
+    padding-right: 16px;
+
+    .user-name {
+      width: inherit;
+      padding-left: 10px;
+    }
+  }
+}

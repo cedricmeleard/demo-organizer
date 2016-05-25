@@ -3,24 +3,29 @@
  */
 function Items(io) {
     var items = [],//item { id, source, text, description }
-        users = [];//user { name, photo, id(google), connectionId(socket.io) }
+        users = [];//user { name, photo, id(google), connectionIds([socket.io]) }
 
+    function sendUsers() {
+        console.log('users : ' + JSON.stringify(users));
+        io.emit('users changed', users);
+    }
 
     io.on('connection', function (socket) {
-        console.log(socket.id);
-
         io.emit('send items', items);
-        io.emit('users changed', users);
+//        io.emit('users changed', users);
 
         socket.on('disconnect', function(){
             //remove user with socket.id from the list
-            var user = users.getByProperty('connectionId', socket.id);
+            var user = users.getByProperty('connectionIds', socket.id);
             if (user) {
                 console.log('user disconnected : ' + socket.id);
-                var index = users.indexOf(user);
-                users.splice(index, 1);
-                
-                io.emit('users changed', users);
+                var connectionIndex = user.connectionIds.indexOf(socket.id);
+                user.connectionIds.splice(connectionIndex, 1);
+                if (user.connectionIds.length === 0) {
+                    var index = users.indexOf(user);
+                    users.splice(index, 1);
+                }
+                sendUsers();
             }
         });
 
@@ -31,25 +36,23 @@ function Items(io) {
                 users.push(user);
                 exists = user;
             }
-            exists.connectionId = socket.id;
+            //create tabs if not exist
+            if (!exists.connectionIds) exists.connectionIds = [];
+            exists.connectionIds.push(socket.id);
 
-            console.log('user has joined');
-            io.emit('users changed', users);
+            sendUsers();
         });
 
         socket.on('item create', function (item) {
+            //change others item position, our new item will be positionned on first place
             incrementPosition(items, 0);
-            // //move all items position +1
-            // for (var i = 0; i < items.length; i++){
-            //     items[i].position++;
-            // }
+            //prepare remaining datas - will change when database ok
             prepareItem(item);
-
             //push item at position 0
-            console.info('[INFO] - new item added');
             items.push(item);
+            console.info('[INFO] - new item added ');
             console.info( JSON.stringify( items ) );
-
+            //warn connected users
             io.emit('send items', items);
         });
 
@@ -148,7 +151,7 @@ function Items(io) {
                 console.error('invalid property : ' + key + ' for object : ' + typeof this[i]);
                 return null;
             }
-            if (this[i][key] === value)
+            if (this[i][key].indexOf(value) != -1)
                 return this[i];
         }
         return null;

@@ -7,12 +7,18 @@
 
     function Creator() {
         var self = this;
-        socket.emit('connect');
+        //load user from input and set it to model
+        self.user = ko.observable(JSON.parse($("#usrInfo").val()));
+        socket.emit('user connected', ko.toJS(self.user));
 
         self.title = ko.observable('');
         self.source = ko.observable('');
         self.description = ko.observable('');
 
+
+        self.disconnect = function () {
+            window.location = '/login#';
+        }
 
         self.save = function () {
 

@@ -33,6 +33,7 @@ function route(app) {
     });
 
     app.get('/login', function(req, res, next) {
+
         res.sendFile(__dirname + '/views/login.html');
     });
 
