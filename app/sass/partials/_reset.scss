@@ -15,7 +15,11 @@ a, a:hover, a:visited {
 
 button {
   border: none;
-  background: none;
+  background: transparent;
   color: $accent-color;
+  cursor: pointer;
+}
+input {
+  border: solid 1px $background-color;
   cursor: pointer;
 }

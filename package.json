@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "test": "karma start karma.conf.js --reporters progress",
-    "prestart": "sass --watch app/sass:app/public/css &",
+    "install": "sass --watch app/sass:app/public/css",
     "start": "node app/index.js"
   },
   "dependencies": {

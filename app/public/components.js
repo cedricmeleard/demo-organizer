@@ -72,7 +72,8 @@ function MenuModel(params) {
     self.items = [
         {title: 'Accueil', anchor: '/home'},
         {title: 'Création', anchor: '/create'},
-        {title: 'Utilisateurs', anchor: '/users'}
+        {title: 'Utilisateurs', anchor: '/users'},
+        {title: 'Résumé', anchor: '/print'}
     ];
     self.show = function () {
         self.status(true)
