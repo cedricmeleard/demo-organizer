@@ -7,7 +7,6 @@ function ItemDemoViewModel(params) {
     self.user = params.user;
 
     self.socket = params.scocket;
-
     self.title = ko.computed(function () {
         return self.item.source + ' - ' + self.item.text;
     });
@@ -19,8 +18,8 @@ function ItemDemoViewModel(params) {
         }
         params.affect(sendData);
     }
-    self.unAffect = function () {
-        params.unAffect(self.item.id);
+    self.unAffect = function (data) {
+        params.unAffect(self.item.id, data.id);
     }
 }
 //demo item
@@ -32,22 +31,19 @@ ko.components.register('item-demo', {
     '<div class="content__form-group">' +
     '<textarea class="form-control" rows="4" placeholder="Entrer la description" data-bind="value : item.description"></textarea>' +
     '</div>' +
-    '<!-- ko ifnot: item.affectedUser -->' +
+   
     '<button type="button" data-bind="click : affect">' +
     '<i class="material-icons">thumb_up</i>' +
-    '</button>' +
-    '<!-- /ko -->' +
-    '<!-- ko if: item.affectedUser -->' +
-    '<div class="user">' +
-    '<!-- ko with: item.affectedUser-->' +
-    '<img class="user-img" data-bind="attr : { src: photo }" />' +
-    '<label class="user-name" data-bind="text : name" ></label>' +
-    '<!-- /ko -->' +
-    '<button type="button" data-bind="click : unAffect">' +
-    '<i class="material-icons">delete</i>' +
-    '</button>' +
-    '</div>' +
-    '<!-- /ko -->'
+    '</button>' +  
+    '<div data-bind="foreach: item.affectedUser" -->' +         
+            '<div class="user">' +            
+                '<img class="user-img" data-bind="attr : { src: photo }" />' +
+                '<label class="user-name" data-bind="text : name" ></label>' +            
+            '<button type="button" data-bind="click : $parent.unAffect">' +
+                '<i class="material-icons">delete</i>' +
+            '</button>' +
+            '</div>' +       
+    '</div>'
 });
 
 function UserInfo(params) {

@@ -39,8 +39,8 @@
         self.affect = function (data) {
             socket.emit('item affected', data);
         }
-        self.unAffect = function (dataId) {
-            socket.emit('item unaffected', dataId);
+        self.unAffect = function (dataId, idUser) {
+            socket.emit('item unaffected', dataId, idUser);
         }
 
         self.disconnect = function () {

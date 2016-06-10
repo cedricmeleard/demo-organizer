@@ -30,7 +30,6 @@ function Items(io) {
 
         socket.on('user connected', function(user){
             var exists = users.getById(user.id);
-
             if (!exists) {
                 users.push(user);
                 exists = user;
@@ -96,18 +95,38 @@ function Items(io) {
         socket.on('item affected', function (data) {
             var change = items.getById(data.id);
             if (change) {
-                change.affectedUser = data.user;
+               if (change.affectedUser == null)
+                    change.affectedUser = [];
+                var found = false; 
+                var i;   
+                for(i = 0; i < change.affectedUser.length; i++)
+                {
+                    if (change.affectedUser[i].id == data.user.id)
+                    {
+                       found = true;
+                       break;
+                    }
+                }    
+                if (!found)    
+                    change.affectedUser.push(data.user);
+                else
+                    window.alert('Vous êtes déjà affecté(e)');
+                
                 io.emit('send items', items);
                 console.log('[INFO] - item affected with id : ' + data.id + ' by ' + data.user.name);
             }
         });
 
-        socket.on('item unaffected', function (id) {
-            var change = items.getById(id);
+        socket.on('item unaffected', function (idChange, idUser) {
+            var change = items.getById(idChange);
             if (change) {
-                change.affectedUser = null;
+                var user = change.affectedUser.getById(idUser);
+                var i = change.affectedUser.indexOf(user);
+                if(i != -1) {
+                    change.affectedUser.splice(i, 1);
+                }
                 io.emit('send items', items);
-                console.log('[INFO] - item unaffected with id : ' + id);
+                console.log('[INFO] - item unaffected with id : ' + idChange);
             }
         });
 

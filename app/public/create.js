@@ -24,7 +24,7 @@
 
             var temp = ko.toJS(self);
             if (!temp.title || !temp.source) {
-                alert('vous devez saisir un tiecket et un titre');
+                alert('vous devez saisir un ticket et un titre');
                 return;
             }
             //save
