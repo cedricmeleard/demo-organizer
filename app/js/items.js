@@ -108,9 +108,7 @@ function Items(io) {
                     }
                 }    
                 if (!found)    
-                    change.affectedUser.push(data.user);
-                else
-                    window.alert('Vous êtes déjà affecté(e)');
+                    change.affectedUser.push(data.user);                
                 
                 io.emit('send items', items);
                 console.log('[INFO] - item affected with id : ' + data.id + ' by ' + data.user.name);
