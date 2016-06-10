@@ -50,12 +50,13 @@
         '</h2>' +
         '<div class="content__form-group">' +
         '<div class="form-control" data-bind="text : item.description"></div>' +
-        '<div class="user">' +
-        '<!-- ko with: item.affectedUser-->' +
-        '<img class="user-img" data-bind="attr : { src: photo }" />' +
-        '<label class="user-name" data-bind="text : name" ></label>' +
-        '<!-- /ko -->' +
+        '<div class="user-affected-list" data-bind="foreach: item.affectedUser" -->' +
+            '<div class="user">' +
+                '<img class="user-img" data-bind="attr : { src: photo }" />' +
+                '<label class="user-name" data-bind="text : name" ></label>' +
+            '</div>' +
         '</div>'
+
     });
 
     ko.applyBindings(new Print());
