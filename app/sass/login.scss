@@ -1,0 +1,34 @@
+@import "partials/vars";
+
+a, a:hover, a:visited {
+  text-decoration: none;
+  color: $item-background;
+}
+
+html, body, ul, li {
+  background: $background-color;
+  color: $item-background;
+  font-family: $font-stack;
+}
+
+.container {
+  margin: 150px auto;
+  max-width: 300px;
+}
+
+.container .connect {
+  border: solid 3px white;
+  padding: 50px;
+  font-size: 2em;
+  text-align: center;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+
+.container .connect:hover {
+  background-color: $item-background;
+}
+
+.container .connect:hover a {
+  color: $background-color;
+}

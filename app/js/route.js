@@ -80,6 +80,10 @@ function route(app) {
         res.render(__dirname + '/views/users.html', { user : JSON.stringify( new User(req.user) ) } );
     });
 
+    app.use('*', function (req, res) {
+        res.redirect('/home');
+    });
+
     function User(user) {
         return {
             id :    user.id,
