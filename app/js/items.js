@@ -12,7 +12,6 @@ function Items(io) {
 
     io.on('connection', function (socket) {
         io.emit('send items', items);
-//        io.emit('users changed', users);
 
         socket.on('disconnect', function(){
             //remove user with socket.id from the list
