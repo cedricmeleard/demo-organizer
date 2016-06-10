@@ -32,15 +32,15 @@ ko.components.register('item-demo', {
     '<textarea class="form-control" rows="4" placeholder="Entrer la description" data-bind="value : item.description"></textarea>' +
     '</div>' +
    
-    '<button type="button" data-bind="click : affect">' +
-    '<i class="material-icons">thumb_up</i>' +
+    '<button class="middle-size" type="button" data-bind="click : affect">' +
+        '<i class="material-icons">person_add</i> S\'affecter' +
     '</button>' +  
-    '<div data-bind="foreach: item.affectedUser" -->' +         
+    '<div class="user-affected-list" data-bind="foreach: item.affectedUser" -->' +
             '<div class="user">' +            
                 '<img class="user-img" data-bind="attr : { src: photo }" />' +
                 '<label class="user-name" data-bind="text : name" ></label>' +            
             '<button type="button" data-bind="click : $parent.unAffect">' +
-                '<i class="material-icons">delete</i>' +
+                '<i class="material-icons">remove_circle_outline</i>' +
             '</button>' +
             '</div>' +       
     '</div>'

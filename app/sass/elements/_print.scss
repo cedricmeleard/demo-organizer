@@ -1,14 +1,16 @@
 .filter-box {
-  line-height: 1.6em;
 
   .material-icons {
     font-size: 1.6em;
     color: $login-color;
+    vertical-align: top;
   }
-
+  .link-text {
+    line-height: 1.6em;
+    color:$login-color;
+    vertical-align: top;
+  }
   .search-text {
     @include border-radius(3px);
-    color: $login-color;
-    vertical-align: top;
   }
 }
