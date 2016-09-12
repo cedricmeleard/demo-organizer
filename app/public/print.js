@@ -34,6 +34,12 @@
             var datas = {items: items};
             ko.mapping.fromJS(datas, {}, self);
         });
+
+        self.print = function () {
+
+            window.print();
+        }
+
     }
 
     ko.components.register('readonly-item', {
@@ -49,7 +55,7 @@
         '<span class="content__content-title" data-bind="text : title"></span>' +
         '</h2>' +
         '<div class="content__form-group">' +
-        '<div class="form-control" data-bind="text : item.description"></div>' +
+        '<div class="form-control" data-bind="html : item.markedown"></div>' +
         '<div class="user-affected-list" data-bind="foreach: item.affectedUser" -->' +
             '<div class="user">' +
                 '<img class="user-img" data-bind="attr : { src: photo }" />' +

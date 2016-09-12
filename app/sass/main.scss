@@ -6,10 +6,14 @@
 @import "elements/item";
 @import "elements/print";
 
-html, body, ul, li {
+html, body {
   background: $background-color;
   color: $item-background;
   font-family: $font-stack;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .material-icons {
@@ -31,13 +35,12 @@ html, body, ul, li {
   width: 100%;
   max-width: $screen-max-width;
 
-  display: flex;
-  align-content: center;
-  flex-direction: column;
-
   .search-text {
     max-width: 150px;
     padding: 5px;
 
   }
 }
+
+//need to be positioned at the end of file
+@import "medias/print";

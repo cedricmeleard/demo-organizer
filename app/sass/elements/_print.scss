@@ -14,3 +14,9 @@
     @include border-radius(3px);
   }
 }
+
+.item {
+  .content {
+    width: 100%;
+  }
+}

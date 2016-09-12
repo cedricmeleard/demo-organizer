@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,12 +14,14 @@
             <a href="/home" class="go-login"><i class="material-icons">chevron_left</i><span class="link-text">Accueil</span></a>
             <h1>Votre démo</h1>
             <input class="search-text" type="text" data-bind="value : search, valueUpdate : 'input'" placeholder="Filter sur le n° de ticket"/><i class="material-icons">search</i>
+            <button type="button" data-bind="click: print"><i class="material-icons">print</i></button>
         </div>
     </div>
 
+
     <!-- ko foreach : tickets -->
     <div class="item">
-        <div class="content"
+        <div class="content read-only"
              data-bind="component : { name : 'readonly-item', params : { item : $data } }"></div>
     </div>
     <!-- /ko -->

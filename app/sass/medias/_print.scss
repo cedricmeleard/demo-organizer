@@ -1,0 +1,25 @@
+@media print {
+
+  html, body, ul, li {
+    background: none;
+    color: $primary-color;
+  }
+
+  .filter-box {
+    .go-login, input, button {
+      display: none;
+    }
+  }
+
+  .item {
+    box-shadow: none;
+    border: solid 1px $accent-color;
+
+    page-break-inside: avoid;
+    page-break-after: auto;
+
+    padding-bottom: 100px;
+    margin-bottom: 40px;
+  }
+
+}

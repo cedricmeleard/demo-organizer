@@ -1,5 +1,5 @@
 .item {
-  width: 100%;
+  width: 98%;
   background: $item-background;
   color: $accent-color;
   @include border-radius(3px);
@@ -21,6 +21,12 @@
 
   .content {
     width: 70%;
+
+    &.read-only {
+      .form-control {
+        display: block;
+      }
+    }
 
     &__content-title {
       font-size: 26px;

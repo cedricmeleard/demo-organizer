@@ -46,6 +46,8 @@ function Items(io) {
             incrementPosition(items, 0);
             //prepare remaining datas - will change when database ok
             prepareItem(item);
+
+            item.markedown = GetMarkDown(item.description);
             //push item at position 0
             items.push(item);
             console.info('[INFO] - new item added ');
@@ -58,6 +60,9 @@ function Items(io) {
             var change = items.getById(item.id);
             if (change) {
                 change.description = item.description;
+
+                change.markedown = GetMarkDown(item.description);
+
                 io.emit('send items', items);
                 console.log('[INFO] - item updated with id : ' + item.id);
             }
@@ -129,6 +134,11 @@ function Items(io) {
         });
 
     });
+
+    function GetMarkDown(text) {
+        var MarkdownIt = require('markdown-it'), md = new MarkdownIt();
+        return md.render(text);
+    }
 
     //prepare item to add on list
     function prepareItem(item){
