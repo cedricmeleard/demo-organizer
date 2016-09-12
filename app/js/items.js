@@ -1,23 +1,18 @@
 /**
  * Created by cedric on 22/04/16.
  */
-function Items(io) {
-    var items = [],//item { id, source, text, description }
+function Items(io, markdown, Item) {
+    var //items = [],//item { id, source, text, description }
         users = [];//user { name, photo, id(google), connectionIds([socket.io]) }
 
-    function sendUsers() {
-        console.log('users : ' + JSON.stringify(users));
-        io.emit('users changed', users);
-    }
-
     io.on('connection', function (socket) {
-        io.emit('send items', items);
+        //retrieve all items first
+        sendItems();
 
-        socket.on('disconnect', function(){
+        socket.on('disconnect', function () {
             //remove user with socket.id from the list
             var user = users.getByProperty('connectionIds', socket.id);
             if (user) {
-                console.log('user disconnected : ' + socket.id);
                 var connectionIndex = user.connectionIds.indexOf(socket.id);
                 user.connectionIds.splice(connectionIndex, 1);
                 if (user.connectionIds.length === 0) {
@@ -28,7 +23,7 @@ function Items(io) {
             }
         });
 
-        socket.on('user connected', function(user){
+        socket.on('user connected', function (user) {
             var exists = users.getById(user.id);
             if (!exists) {
                 users.push(user);
@@ -43,139 +38,181 @@ function Items(io) {
 
         socket.on('item create', function (item) {
             //change others item position, our new item will be positionned on first place
-            incrementPosition(items, 0);
+            incrementPosition(0);
             //prepare remaining datas - will change when database ok
             prepareItem(item);
 
-            item.markedown = GetMarkDown(item.description);
-            //push item at position 0
-            items.push(item);
-            console.info('[INFO] - new item added ');
-            console.info( JSON.stringify( items ) );
-            //warn connected users
-            io.emit('send items', items);
+            saveItem(item, sendItems);
         });
 
-        socket.on('item updated', function(item){
-            var change = items.getById(item.id);
-            if (change) {
+        socket.on('item updated', function (item) {
+            Item.findById(item._id, function (err, change) {
+                if (err) console.error(err);
+
                 change.description = item.description;
+                change.markedown = getMarkDown(item.description);
 
-                change.markedown = GetMarkDown(item.description);
-
-                io.emit('send items', items);
-                console.log('[INFO] - item updated with id : ' + item.id);
-            }
+                updateItem(change, sendItems);
+            });
         });
 
-        socket.on('item positioned', function(move){
-            //invert based on position , should be usefull with drag & drop
-            var temp = getItem(move.to), item = getItem(move.from);
-            if (temp && item) {
-                item.position = move.to; temp.position = move.from;
-                //log
-                console.log('[INFO] - move item position from : ' + move.from + ' to : ' + move.to);
-                io.emit('send items', items);
-            }
+        socket.on('item positioned', function (move) {
+
+            Item.findOne({position: move.to}, function (err, temp) {
+                if (err) console.error(err);
+
+                Item.findOne({position: move.from}, function (err, item) {
+                    if (err) console.error(err);
+                    //invert position
+                    if (temp && item) {
+                        item.position = move.to;
+                        temp.position = move.from;
+
+                        item.save(function () {
+                            temp.save(sendItems);
+                        });
+                    }
+                });
+            });
         });
 
-        socket.on('item deleted', function(itemId){
-            var index = 0;
-            for (var i = 0; i < items.length; i++) {
-                var temp = items[i];
-                if (temp.id === itemId) {
-                    items.splice(i, 1);
-                    index = temp.position;
-                    io.emit('send items', items);
-                    console.log('[INFO] - item deleted with id : ' + itemId);
-                }
-            }
-
-            for(var j = 0; j < items.length; j++){
-                if (items[j].position >= index)
-                    items[j].position --;
-            }
+        socket.on('item deleted', function (itemId) {
+            deleteItem(itemId, sendItems);
         });
 
         socket.on('item affected', function (data) {
-            var change = items.getById(data.id);
-            if (change) {
-               if (change.affectedUser == null)
-                    change.affectedUser = [];
-                var found = false; 
-                var i;   
-                for(i = 0; i < change.affectedUser.length; i++)
-                {
-                    if (change.affectedUser[i].id == data.user.id)
-                    {
-                       found = true;
-                       break;
+            Item.findById(data._id,
+                function (err, change) {
+                    if (err) console.log(err);
+
+                    if (change.affected == null)
+                        change.affected = [];
+                    var found = false;
+                    var i;
+                    for (i = 0; i < change.affected.length; i++) {
+                        if (change.affected[i].id == data.user.id) {
+                            found = true;
+                            break;
+                        }
                     }
-                }    
-                if (!found)    
-                    change.affectedUser.push(data.user);                
-                
-                io.emit('send items', items);
-                console.log('[INFO] - item affected with id : ' + data.id + ' by ' + data.user.name);
-            }
+                    if (!found)
+                        change.affected.push(data.user);
+
+                    updateItem(change, sendItems);
+                });
         });
 
-        socket.on('item unaffected', function (idChange, idUser) {
-            var change = items.getById(idChange);
-            if (change) {
-                var user = change.affectedUser.getById(idUser);
-                var i = change.affectedUser.indexOf(user);
-                if(i != -1) {
-                    change.affectedUser.splice(i, 1);
+        socket.on('item unaffected', function (itemId, idUser) {
+            Item.findById(itemId, function (err, change) {
+                if (err) console.error(err);
+
+                var user = change.affected.getById(idUser);
+                var i = change.affected.indexOf(user);
+                if (i != -1) {
+                    change.affected.splice(i, 1);
                 }
-                io.emit('send items', items);
-                console.log('[INFO] - item unaffected with id : ' + idChange);
-            }
+                updateItem(change, sendItems);
+            });
         });
-
     });
 
-    function GetMarkDown(text) {
-        var MarkdownIt = require('markdown-it'), md = new MarkdownIt();
-        return md.render(text);
+    function saveItem(item, callback) {
+        var mongoItem = new Item(
+            {
+                source: item.source,
+                text: item.text,
+                description: item.description,
+                position: item.position
+            });
+
+        mongoItem.save(function (err) {
+            if (err) console.error(err);
+            if (callback) callback();
+        });
+    }
+
+    function updateItem(item, callback) {
+        Item.findById(item._id, function (err, doc) {
+            if (err) console.error(err);
+
+            //prepare and update
+            doc.source = item.source;
+            doc.text = item.text;
+            doc.description = item.description;
+            doc.position = item.position;
+            doc.affected = item.affected;
+            doc.markdown = getMarkDown(item.description);
+
+            doc.save(callback);
+        });
+    }
+
+    function deleteItem(itemId, callback) {
+        Item.findById(itemId, function (err, item) {
+            if (err) console.error(err);
+            item.remove();
+            //decrease position
+            Item.where({position: {$gte: item.position}}).update({$inc: {position: -1}});
+
+            if (callback) callback();
+        });
+
+
+    }
+
+    function sendItems() {
+        Item.find(function (err, items) {
+            if (err) return console.error(err);
+
+            io.emit('send items', items);
+        });
+    }
+
+    function sendUsers() {
+        //console.log('users : ' + JSON.stringify(users));
+        io.emit('users changed', users);
+    }
+
+    function getMarkDown(text) {
+        return markdown.render(text);
     }
 
     //prepare item to add on list
-    function prepareItem(item){
+    function prepareItem(item) {
         //generate id
-        item.id = Guid();
         item.position = 0;
-        item.affectedUser = null;
+        item.affected = null;
+        item.markedown = getMarkDown(item.description);
     }
+
     //increment position index
-    function incrementPosition(elements, index) {
-        //move all items position +1
-        for (var i = 0; i < elements.length; i++){
-            if (elements[i].position >= index)
-                elements[i].position++;
-        }
+    function incrementPosition(index) {
+        Item.find(function (err, elements) {
+            //move all items position +1
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].position >= index) {
+                    elements[i].position++;
+                    elements[i].save();
+                }
+            }
+        });
     }
-    //should change accessing db with mongoose
-    //extract item from list using position
-    function getItem(position) {
-        for(var i = 0; i < items.length; i++){
-            if (items[i].position === position) return items[i];
-        }
-        console.log('[WARN] - item not found with position : ', position);
-        return null;
-    }
+
     //extract item from list using id
     function getById(id) {
-        for(var i = 0; i < this.length; i++){
+        for (var i = 0; i < this.length; i++) {
             if (this[i].id === id) return this[i];
         }
         return null;
     }
-    function getByProperty(key, value){
-        for(var i = 0; i < this.length; i++){
+
+    //extract item from list using any unique value
+    function getByProperty(key, value) {
+
+        for (var i = 0; i < this.length; i++) {
             if (!this[i].hasOwnProperty(key)) {
-                console.error('invalid property : ' + key + ' for object : ' + typeof this[i]);
-                return null;
+                console.warn('invalid property : ' + key + ' for object : ' + typeof this[i]);
+                continue;
             }
             if (this[i][key].indexOf(value) != -1)
                 return this[i];
@@ -185,17 +222,6 @@ function Items(io) {
 
     Array.prototype.getByProperty = getByProperty;
     Array.prototype.getById = getById;
-
-    //generating an id
-    function Guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
-    }
 
 }
 

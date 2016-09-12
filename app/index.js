@@ -6,13 +6,26 @@ var path = require('path');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
+//initiate mongo connexion
+var markdown = require('markdown-it')();
 app.use(express.static(path.join(__dirname, 'public')));
-//app
-require('./js/items')(io);
-require('./js/route')(app);
-//load public
 
+var mongoose = require('mongoose');
+//initiate markdown plugin
+//init connecion to mongo db
+var db = mongoose.connection;
+mongoose.connect('mongodb://localhost/demo-organizer');
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+    // we're connected!
+    var Item = require('./js/models')(mongoose);
+    //start app
+    require('./js/items')(io, markdown, Item);
+    require('./js/route')(app);
+
+});
+
+//START SERVER
 http.listen(81, function () {
     console.log('listening on *:81');
 });

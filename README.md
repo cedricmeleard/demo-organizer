@@ -14,15 +14,13 @@ this project depends on nodejs, it use express, socket.io and passport (google a
 it also depends on ruby and particularly no sass (here it's scss) for css compile.
 
 therefore you'll need to install nodejs : [Nodejs](https://nodejs.org/en/)
-
+a mongodb instance running : [MongoDb](https://www.mongodb.com/)
 ruby : [ruby](https://www.ruby-lang.org/fr/)
-
 and sass : [Sass](http://sass-lang.com/install)
-
 
 ## Start
 
-Once everything is set up
+Once everything is set up, you can use package.json to configure project
 run
 
     npm install
@@ -35,8 +33,8 @@ then
 
 You need to connect using google account, then there is 2 pages you can access.
 by default server start listening on port 81 (see index.js)
-then my google code config is set for a callback url on localhost:81 to, those things needs to be change with
-your own values
+then my google code config is set for a callback url on localhost:81 to, those things needs to be changed with
+your own values in app/js/config.js
 
 ### http://localhost:81/home
 root access, where you can see item and modify them

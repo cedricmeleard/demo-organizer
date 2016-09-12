@@ -17,11 +17,11 @@
     </div>
     <!-- ko component : { name : 'user-connect', params : { user : user, callback : disconnect } } --><!-- /ko -->
     <div class="users">
-        <ul data-bind="foreach: users">
-            <li class="user-connected">
+        <!-- ko foreach: users -->
+        <div class="user-connected">
                 <user-item params="user : $data"></user-item>
-            </li>
-        </ul>
+        </div>
+        <!-- /ko -->
     </div>
 </div>
 <!-- depedencies -->

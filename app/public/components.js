@@ -13,13 +13,13 @@ function ItemDemoViewModel(params) {
 
     self.affect = function () {
         var sendData = {
-            id: self.item.id,
+            _id: self.item._id,
             user: ko.toJS(self.user)
-        }
+        };
         params.affect(sendData);
-    }
+    };
     self.unAffect = function (data) {
-        params.unAffect(self.item.id, data.id);
+        params.unAffect(self.item._id, data.id);
     }
 }
 //demo item
@@ -34,8 +34,8 @@ ko.components.register('item-demo', {
    
     '<button class="middle-size" type="button" data-bind="click : affect">' +
         '<i class="material-icons">person_add</i> S\'affecter' +
-    '</button>' +  
-    '<div class="user-affected-list" data-bind="foreach: item.affectedUser" -->' +
+    '</button>' +
+    '<div class="user-affected-list" data-bind="foreach: item.affected">' +
             '<div class="user">' +            
                 '<img class="user-img" data-bind="attr : { src: photo }" />' +
                 '<label class="user-name" data-bind="text : name" ></label>' +            
@@ -64,7 +64,7 @@ ko.components.register('user-connect', {
     '</div>'
 });
 
-function MenuModel(params) {
+function MenuModel() {
     var self = this;
     //on maintient le status du menu
     self.status = ko.observable(false);
@@ -80,13 +80,13 @@ function MenuModel(params) {
     };
     self.close = function () {
         self.status(false);
-    }
+    };
 
     //retourne la classe associée a l'état du menu (ouvert ou fermé)
     self.visibleSideNav = ko.computed(function () {
         return self.status() ? 'opened' : '';
     });
-    ;
+
     //accède à la section
     self.goTo = function (item) {
         window.location = item.anchor;

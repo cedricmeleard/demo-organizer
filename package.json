@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "test": "karma start karma.conf.js --reporters progress",
-    "install": "sass --watch app/sass:app/public/css",
+    "install": "sass --watch app/sass:app/public/css &",
     "start": "node app/index.js"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "jquery": "^2.2.3",
     "knockout": "^3.4.0",
     "markdown-it": "^7.0.1",
+    "mongoose": "^4.6.0",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "passport-google-oauth2": "^0.1.6",

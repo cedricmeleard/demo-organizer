@@ -17,16 +17,12 @@
                 function (left, right) {
                     return left.position() == right.position() ? 0 : (left.position() < right.position() ? -1 : 1)
                 });
-
             var sourceId = self.search();
-
-            var result = ko.utils.arrayFilter(tickets(), function (item) {
+            return ko.utils.arrayFilter(tickets(), function (item) {
                 if (!sourceId) return tickets();
 
                 return item.source().indexOf(sourceId) != -1;
             });
-
-            return result;
         });
 
         socket.on('send items', function (items) {
@@ -55,8 +51,8 @@
         '<span class="content__content-title" data-bind="text : title"></span>' +
         '</h2>' +
         '<div class="content__form-group">' +
-        '<div class="form-control" data-bind="html : item.markedown"></div>' +
-        '<div class="user-affected-list" data-bind="foreach: item.affectedUser" -->' +
+        '<div class="form-control" data-bind="html : item.markdown"></div>' +
+        '<div class="user-affected-list" data-bind="foreach: item.affected">' +
             '<div class="user">' +
                 '<img class="user-img" data-bind="attr : { src: photo }" />' +
                 '<label class="user-name" data-bind="text : name" ></label>' +

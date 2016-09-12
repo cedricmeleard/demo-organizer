@@ -25,27 +25,27 @@
             var move = {from: data.position, to: data.position - 1};
 
             socket.emit('item positioned', move);
-        }
+        };
         self.moveDown = function (data) {
             if (data.position == self.items().length - 1) return;
             var move = {from: data.position, to: data.position + 1};
 
             socket.emit('item positioned', move);
-        }
+        };
         self.delete = function (data) {
-            socket.emit('item deleted', data.id);
-        }
+            socket.emit('item deleted', data._id);
+        };
 
         self.affect = function (data) {
             socket.emit('item affected', data);
-        }
+        };
         self.unAffect = function (dataId, idUser) {
             socket.emit('item unaffected', dataId, idUser);
-        }
+        };
 
         self.disconnect = function () {
             window.location = '/login#';
-        }
+        };
 
         socket.on('send items', function (items) {
             self.items.removeAll();
