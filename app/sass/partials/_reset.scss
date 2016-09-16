@@ -20,3 +20,8 @@ input {
   border: solid 1px $background-color;
   cursor: pointer;
 }
+
+select {
+  background-color: $item-background;
+  color: $accent-color;
+}

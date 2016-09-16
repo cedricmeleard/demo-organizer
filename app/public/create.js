@@ -15,11 +15,22 @@
         self.source = ko.observable('');
         self.description = ko.observable('');
 
+        self.sprint = ko.observable('');
 
         self.disconnect = function () {
             window.location = '/login#';
         }
 
+        self.createSprint = function () {
+            if (!self.sprint()) return;
+            var data = {
+                name: self.sprint()
+            }
+            socket.emit('create archive', data);
+
+            self.sprint('');
+        }
+        
         self.save = function () {
 
             var temp = ko.toJS(self);

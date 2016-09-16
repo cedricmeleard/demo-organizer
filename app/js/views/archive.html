@@ -11,14 +11,17 @@
 <div class="container" id="organizerContainer">
     <div>
         <div class="filter-box">
-            <a href="/home" class="go-login"><i class="material-icons">chevron_left</i><span class="link-text">Accueil</span></a>
-            <h1>Votre démo</h1>
-            <input class="search-text" type="text" data-bind="value : search, valueUpdate : 'input'" placeholder="Filter sur le n° de ticket"/><i class="material-icons">search</i>
+            <a href="/home" class="go-login"><i class="material-icons">chevron_left</i><span
+                    class="link-text">Accueil</span></a>
+            <h1>Consultation des archives</h1>
+            <input class="search-text" type="text" data-bind="value : search, valueUpdate : 'input'"
+                   placeholder="Filter sur le n° de ticket"/><i class="material-icons">search</i>
             <button type="button" data-bind="click: print"><i class="material-icons">print</i></button>
+            <select class="search-text"
+                    data-bind="options: sprints, optionsValue : '_id',optionsText: 'name', value: currentSprint, optionsCaption: 'Choisir un sprint...'"></select>
+            <button type="button" data-bind="click: load"><i class="material-icons">cloud_upload</i></button>
         </div>
     </div>
-
-
     <!-- ko foreach : tickets -->
     <div class="item">
         <div class="content read-only"
@@ -33,6 +36,6 @@
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>
-<script src="print.js"></script>
+<script src="archive.js"></script>
 </body>
 </html>

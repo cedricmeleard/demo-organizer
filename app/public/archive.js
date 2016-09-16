@@ -1,13 +1,17 @@
 /**
- * Created by CMeleard on 13/05/2016.
+ * Created by cedric on 16/09/16.
  */
+
 (function () {
     'use strict';
     var socket = io();
 
-    function Print() {
+    function Archive() {
         var self = this;
         socket.emit('connect');
+
+        self.sprints = ko.observableArray();
+        self.currentSprint = ko.observable();
 
         self.search = ko.observable('');
         self.items = ko.observableArray();
@@ -25,19 +29,24 @@
             });
         });
 
-        socket.on('send items', function (items) {
+        socket.on('send archive', function (items) {
             self.items.removeAll();
             var datas = {items: items};
             ko.mapping.fromJS(datas, {}, self);
+        });
+
+        socket.on('load sprints', function (sprints) {
+            self.sprints(sprints);
         });
 
         self.print = function () {
             window.print();
         }
 
+        self.load = function () {
+            socket.emit('load archive', self.currentSprint());
+        }
     }
 
-
-
-    ko.applyBindings(new Print());
+    ko.applyBindings(new Archive());
 })();

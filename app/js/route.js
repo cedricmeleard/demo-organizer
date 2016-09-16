@@ -80,6 +80,11 @@ function route(app) {
         res.render(__dirname + '/views/users.html', { user : JSON.stringify( new User(req.user) ) } );
     });
 
+    app.use('/archive', ensureAuthenticated);
+    app.get('/archive', function (req, res) {
+        res.render(__dirname + '/views/archive.html', {user: JSON.stringify(new User(req.user))});
+    });
+
     app.use('*', function (req, res) {
         res.redirect('/home');
     });

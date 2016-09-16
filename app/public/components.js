@@ -73,7 +73,8 @@ function MenuModel() {
         {title: 'Accueil', anchor: '/home'},
         {title: 'Création', anchor: '/create'},
         {title: 'Utilisateurs', anchor: '/users'},
-        {title: 'Résumé', anchor: '/print'}
+        {title: 'Résumé', anchor: '/print'},
+        {title: 'Archives', anchor: '/archive'}
     ];
     self.show = function () {
         self.status(true)
@@ -109,4 +110,27 @@ ko.components.register('side-nav', {
     '<nav data-bind="click: $parent.goTo, text : title"></nav>' +
     '</div>' +
     '</div>'
+});
+
+ko.components.register('readonly-item', {
+    viewModel: function (params) {
+        var self = this;
+        self.item = params.item;
+
+        self.title = ko.computed(function () {
+            return self.item.source() + ' - ' + self.item.text();
+        });
+    },
+    template: '<h2>' +
+    '<span class="content__content-title" data-bind="text : title"></span>' +
+    '</h2>' +
+    '<div class="content__form-group">' +
+    '<div class="form-control" data-bind="html : item.markdown"></div>' +
+    '<div class="user-affected-list" data-bind="foreach: item.affected">' +
+    '<div class="user">' +
+    '<img class="user-img" data-bind="attr : { src: photo }" />' +
+    '<label class="user-name" data-bind="text : name" ></label>' +
+    '</div>' +
+    '</div>'
+
 });

@@ -1,13 +1,15 @@
 /**
  * Created by cedric on 22/04/16.
  */
-function Items(io, markdown, Item) {
-    var //items = [],//item { id, source, text, description }
-        users = [];//user { name, photo, id(google), connectionIds([socket.io]) }
+function Items(io, markdown, Models) {
+    var Item = Models.Item, Sprint = Models.Sprint;
+    //connected users, not persisted
+    var users = [];//user { name, photo, id(google), connectionIds([socket.io]) }
 
     io.on('connection', function (socket) {
         //retrieve all items first
         sendItems();
+        sendSprints();
 
         socket.on('disconnect', function () {
             //remove user with socket.id from the list
@@ -114,8 +116,34 @@ function Items(io, markdown, Item) {
                 updateItem(change, sendItems);
             });
         });
-    });
 
+        socket.on('create archive', function (data) {
+            //data { name : 'name fo sprint' }
+            var sprint = new Sprint({
+                name: data.name
+            });
+            sprint.save(function (err, saved) {
+                if (err) console.error(err);
+                Item.find({sprint: null}, function (err, items) {
+                    if (err) console.error(err);
+                    items.forEach(function (item) {
+                        item.sprint = saved._id;
+                        item.save();
+                    });
+                    sendItems();
+                });
+            });
+        });
+
+        socket.on('load archive', function (sprintId) {
+            Item.find({sprint: sprintId}, function (err, items) {
+                if (err) console.error(err);
+
+                io.emit('send archive', items);
+            });
+        });
+    });
+    
     function saveItem(item, callback) {
         var mongoItem = new Item(
             {
@@ -156,15 +184,22 @@ function Items(io, markdown, Item) {
 
             if (callback) callback();
         });
-
-
     }
 
     function sendItems() {
-        Item.find(function (err, items) {
+        //working on not linked items
+        Item.find({sprint: null}, function (err, items) {
             if (err) return console.error(err);
 
             io.emit('send items', items);
+        });
+    }
+
+    function sendSprints() {
+        Sprint.find(function (err, sprints) {
+            if (err) console.error(err);
+
+            io.emit('load sprints', sprints);
         });
     }
 

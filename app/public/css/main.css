@@ -1,11 +1,8 @@
 html,
 body,
-ul,
-ol,
-li {
+ul {
     margin: 0;
     padding: 0;
-    list-style: none;
 }
 
 a, a:hover, a:visited {
@@ -23,6 +20,11 @@ button {
 input {
     border: solid 1px #009688;
     cursor: pointer;
+}
+
+select {
+    background-color: white;
+    color: #607D8B;
 }
 
 /* Menu */
@@ -48,7 +50,7 @@ input {
 
 .menu {
     position: fixed;
-    top: 0px;
+    top: 0;
     left: -312px;
     background-color: #FFF;
     z-index: 2;
@@ -152,11 +154,11 @@ input {
 
 .user-top .user-name {
     overflow: hidden;
-    padding-left: 0px;
+    padding-left: 0;
     font-size: 1.5em;
     height: 50px;
     line-height: 50px;
-    width: 0px;
+    width: 0;
 }
 
 .user-top:hover {
@@ -227,13 +229,11 @@ input {
     color: white;
     vertical-align: top;
 }
-
 .filter-box .link-text {
     line-height: 1.6em;
     color: white;
     vertical-align: top;
 }
-
 .filter-box .search-text {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
