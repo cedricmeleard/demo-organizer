@@ -19,7 +19,11 @@ button {
 
 input {
     border: solid 1px #009688;
-    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 5px;
 }
 
 select {
@@ -210,6 +214,10 @@ select {
     line-height: 26px;
 }
 
+.item .content__form-group {
+    margin-bottom: 16px;
+}
+
 .item .content__form-group .form-control {
     width: 100%;
     margin: 16px auto;
@@ -274,7 +282,7 @@ html, body {
 .container {
     margin: 40px auto;
     width: 100%;
-    max-width: 600px;
+    max-width: 990px;
 }
 
 .container .search-text {

@@ -1,34 +1,28 @@
 a, a:hover, a:visited {
-    text-decoration: none;
-    color: white;
-}
+  text-decoration: none;
+  color: white; }
 
 html, body, ul, li {
-    background: #009688;
-    color: white;
-    font-family: Arial, sans-serif;
-}
+  background: #009688;
+  color: white;
+  font-family: Arial, sans-serif; }
 
 .container {
-    margin: 150px auto;
-    max-width: 300px;
-}
+  margin: 150px auto;
+  max-width: 300px; }
 
 .container .connect {
-    border: solid 3px white;
-    padding: 50px;
-    font-size: 2em;
-    text-align: center;
-    transition: all 0.3s linear;
-    cursor: pointer;
-}
+  border: solid 3px white;
+  padding: 50px;
+  font-size: 2em;
+  text-align: center;
+  transition: all 0.3s linear;
+  cursor: pointer; }
 
 .container .connect:hover {
-    background-color: white;
-}
+  background-color: white; }
 
 .container .connect:hover a {
-    color: #009688;
-}
+  color: #009688; }
 
 /*# sourceMappingURL=login.css.map */

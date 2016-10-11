@@ -9,10 +9,10 @@
 </head>
 <body>
 <input id="usrInfo" type="hidden" value='<%- user %>'/>
-
+<side-nav class="side-nav"></side-nav>
 <div class="container">
     <div class="header">
-        <side-nav class="side-nav"></side-nav>
+
         <h1>Ajouter un nouvel item</h1>
     </div>
     <!-- ko component : { name : 'user-connect', params : { user : user, callback : disconnect } } -->
@@ -34,12 +34,21 @@
             <button type="button" data-bind="click : save"><i class="material-icons">done</i></button>
         </div>
     </div>
+    <div class="header">
+        <h1>Valider le sprint</h1>
+    </div>
     <div class="item">
         <div class="content">
             <div class="content__form-group">
-                <label>Sprint</label><input type="text" data-bind="value : sprint"/>
-                <button type="button" data-bind="click : createSprint"><i class="material-icons">done</i></button>
+                <label>Titre de l'archive</label><input type="text" data-bind="value : sprint"/>
             </div>
+            <p>
+            <p>Attention, cette action n'est pas réverssible, ne cliquer que lorsque vous souhaitez archiver le
+                sprint</p>
+            </p>
+        </div>
+        <div class="actions">
+            <button type="button" data-bind="click : createSprint"><i class="material-icons">done</i></button>
         </div>
     </div>
 </div>
