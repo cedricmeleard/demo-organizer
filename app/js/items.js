@@ -178,10 +178,13 @@ function Items(io, markdown, Models) {
     function deleteItem(itemId, callback) {
         Item.findById(itemId, function (err, item) {
             if (err) console.error(err);
-            item.remove();
-            //decrease position
-            Item.where({position: {$gte: item.position}}).update({$inc: {position: -1}});
 
+            //decrease position
+            Item.update({position: {$gt: item.position}}, {$inc: {position: -1}}, {multi: true}, function (err) {
+                if (err) console.error(err);
+            });
+
+            item.remove();
             if (callback) callback();
         });
     }
