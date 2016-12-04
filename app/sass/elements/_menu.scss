@@ -2,30 +2,29 @@
 .header {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 
-  .side-nav {
-    position: absolute;
-    left: 30px;
-    top: 16px;
-
-    //&::before {
-    //    background: rgba(0,0,0,.5);
-    //    position: fixed;
-    //    top:0;
-    //    right:0;
-    //    left:0;
-    //    bottom:0;
-    //    content: ' ';
-    //}
+  .side-nav.open:before {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(127, 127, 127, .7);
+    content: ' ';
   }
-}
+  .menu-title {
 
-.menu-title {
-  position: fixed;
+    .material-icons {
+      color: $item-background;
+      font-size: 2em;
+      line-height: 50px;
+    }
+  }
 
-  .material-icons {
-    color: $item-background;
+  .main-title {
     font-size: 2em;
+    line-height: 50px;
   }
 }
 

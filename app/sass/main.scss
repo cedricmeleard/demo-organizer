@@ -6,14 +6,21 @@
 @import "elements/item";
 @import "elements/print";
 
-html, body {
+body {
   background: $background-color;
   color: $item-background;
   font-family: $font-stack;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 * {
   box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
 }
 
 .material-icons {
@@ -31,8 +38,10 @@ html, body {
   }
 }
 .container {
-  margin: 40px auto;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
   max-width: $screen-max-width;
 
   .search-text {

@@ -1,4 +1,5 @@
 @import "partials/vars";
+@import "partials/reset";
 
 a, a:hover, a:visited {
   text-decoration: none;
@@ -6,29 +7,45 @@ a, a:hover, a:visited {
 }
 
 html, body, ul, li {
-  background: $background-color;
-  color: $item-background;
   font-family: $font-stack;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .container {
-  margin: 150px auto;
-  max-width: 300px;
-}
+  background: url("img/header-background.jpg") no-repeat center center #AD835B;
+  background-size: auto 100%;
 
-.container .connect {
-  border: solid 3px white;
-  padding: 50px;
-  font-size: 2em;
-  text-align: center;
-  transition: all 0.3s linear;
-  cursor: pointer;
-}
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 
-.container .connect:hover {
-  background-color: $item-background;
-}
+  .connect {
+    background: $background-color;
+    border: 5px solid $background-color;
+    color: $item-background;
 
-.container .connect:hover a {
-  color: $background-color;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    font-size: 2em;
+    padding: 70px 0;
+
+    flex-grow: 1;
+    text-align: center;
+
+    &:hover {
+      background-color: transparent; //$item-background;
+      border: 5px solid $background-color;
+      color: $background-color;
+    }
+  }
 }

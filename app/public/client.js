@@ -13,13 +13,7 @@
         socket.emit('user connected', ko.toJS(self.user) );
 
         self.items = ko.observableArray();
-        self.tickets = ko.computed(function () {
-            var tickets = self.items.sort(
-                function (left, right) {
-                    return left.position == right.position ? 0 : (left.position < right.position ? -1 : 1)
-                });
-            return tickets();
-        });
+
         self.moveUp = function (data) {
             if (data.position == 0) return;
             var move = {from: data.position, to: data.position - 1};

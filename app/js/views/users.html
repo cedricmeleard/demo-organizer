@@ -13,9 +13,10 @@
 <div class="container" id="organizerContainer">
     <div class="header">
         <side-nav class="side-nav"></side-nav>
-        <h1>Utilisateurs connectés</h1>
+        <div class="main-title">Demo-organizer</div>
+        <user-connect params="{ user : user, callback : disconnect }"></user-connect>
     </div>
-    <!-- ko component : { name : 'user-connect', params : { user : user, callback : disconnect } } --><!-- /ko -->
+    <h1>Utilisateurs connectés</h1>
     <div class="users">
         <!-- ko foreach: users -->
         <div class="user-connected">

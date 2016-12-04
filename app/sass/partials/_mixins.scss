@@ -8,7 +8,6 @@
 @mixin box-shadow($horizontal, $vertical,$blur) {
   box-shadow: $horizontal $vertical $blur rgba(0,0,0, 0.28);
   padding: 16px;
-  margin: 16px auto;
 }
 
 @mixin round-img($size){

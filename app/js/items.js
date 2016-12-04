@@ -136,11 +136,11 @@ function Items(io, markdown, Models) {
         });
 
         socket.on('load archive', function (sprintId) {
-            Item.find({sprint: sprintId}, function (err, items) {
-                if (err) console.error(err);
-
-                io.emit('send archive', items);
-            });
+            Item.find({sprint: sprintId}).sort('position')
+                .exec((err, items) => {
+                    if (err) console.error(err);
+                    io.emit('send archive', items);
+                });
         });
     });
     
@@ -188,9 +188,9 @@ function Items(io, markdown, Models) {
 
     function sendItems() {
         //working on not linked items
-        Item.find({sprint: null}, function (err, items) {
+        Item.find({sprint: null}).sort('position')
+            .exec((err, items) => {
             if (err) return console.error(err);
-
             io.emit('send items', items);
         });
     }

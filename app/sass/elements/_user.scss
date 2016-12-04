@@ -30,13 +30,9 @@
 
 .user-top {
   @extend .user;
-  position: absolute;
-  z-index: 1;
-  top: 16px;
-  right: 16px;
   background: $item-background;
   color: $accent-color;
-  transition: all .3s linear;
+  transition: all .3s ease-in;
   padding: 2px;
 
   @include border-radius(27px);

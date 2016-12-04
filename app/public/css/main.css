@@ -1,8 +1,7 @@
-html,
-body,
-ul {
+ul, li {
     margin: 0;
     padding: 0;
+    list-style: none;
 }
 
 a, a:hover, a:visited {
@@ -13,12 +12,12 @@ a, a:hover, a:visited {
 button {
     border: none;
     background: transparent;
-    color: #607D8B;
+    color: #0277BD;
     cursor: pointer;
 }
 
 input {
-    border: solid 1px #009688;
+    border: solid 1px #0277BD;
 }
 
 input[type="text"] {
@@ -28,28 +27,35 @@ input[type="text"] {
 
 select {
     background-color: white;
-    color: #607D8B;
+    color: #0277BD;
 }
 
 /* Menu */
 .header {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
-.header .side-nav {
-    position: absolute;
-    left: 30px;
-    top: 16px;
-}
-
-.menu-title {
+.header .side-nav.open:before {
     position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(127, 127, 127, 0.7);
+    content: ' ';
 }
 
-.menu-title .material-icons {
+.header .menu-title .material-icons {
     color: white;
     font-size: 2em;
+    line-height: 50px;
+}
+
+.header .main-title {
+    font-size: 2em;
+    line-height: 50px;
 }
 
 .menu {
@@ -70,7 +76,7 @@ select {
 
 .menu-header {
     padding: 120px 16px 16px 16px;
-    background-color: #607D8B;
+    background-color: #0277BD;
     color: #ffffff;
     font-size: 2em;
 }
@@ -88,7 +94,7 @@ select {
 }
 
 .menu-links nav {
-    color: #607D8B;
+    color: #0277BD;
     padding: 16px;
 }
 
@@ -133,13 +139,9 @@ select {
 }
 
 .user-top {
-    position: absolute;
-    z-index: 1;
-    top: 16px;
-    right: 16px;
     background: white;
-    color: #607D8B;
-    transition: all .3s linear;
+    color: #0277BD;
+    transition: all .3s ease-in;
     padding: 2px;
     -webkit-border-radius: 27px;
     -moz-border-radius: 27px;
@@ -175,16 +177,14 @@ select {
 }
 
 .item {
-    width: 98%;
     background: white;
-    color: #607D8B;
+    color: #0277BD;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     border-radius: 3px;
     box-shadow: 0 3px 4px rgba(0, 0, 0, 0.28);
     padding: 16px;
-    margin: 16px auto;
     display: flex;
     align-content: center;
     align-items: center;
@@ -232,6 +232,10 @@ select {
     justify-content: space-between;
 }
 
+.item:not(:first-child) {
+    margin-top: 16px;
+}
+
 .filter-box .material-icons {
     font-size: 1.6em;
     color: white;
@@ -253,18 +257,25 @@ select {
     width: 100%;
 }
 
-html, body {
-    background: #009688;
+body {
+    background: #0277BD;
     color: white;
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
 }
 
 * {
     box-sizing: border-box;
 }
 
+h1 {
+    text-align: center;
+}
+
 .material-icons {
-    color: #607D8B;
+    color: #0277BD;
     font-size: 1em;
     line-height: 1em;
 }
@@ -280,8 +291,10 @@ html, body {
 }
 
 .container {
-    margin: 40px auto;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
     max-width: 990px;
 }
 
@@ -302,7 +315,7 @@ html, body {
 
     .item {
         box-shadow: none;
-        border: solid 1px #607D8B;
+        border: solid 1px #0277BD;
         page-break-inside: avoid;
         page-break-after: auto;
         padding-bottom: 100px;

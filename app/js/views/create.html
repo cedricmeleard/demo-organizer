@@ -9,14 +9,13 @@
 </head>
 <body>
 <input id="usrInfo" type="hidden" value='<%- user %>'/>
-<side-nav class="side-nav"></side-nav>
 <div class="container">
     <div class="header">
-
-        <h1>Ajouter un nouvel item</h1>
+        <side-nav class="side-nav"></side-nav>
+        <div class="main-title">Demo-organizer</div>
+        <user-connect params="{ user : user, callback : disconnect }"></user-connect>
     </div>
-    <!-- ko component : { name : 'user-connect', params : { user : user, callback : disconnect } } -->
-    <!-- /ko -->
+    <h1>Ajouter un nouvel item</h1>
     <div class="item">
         <div class="content">
             <div class="content__form-group">

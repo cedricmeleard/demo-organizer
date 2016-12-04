@@ -1,9 +1,9 @@
 .item {
-  width: 98%;
   background: $item-background;
   color: $accent-color;
   @include border-radius(3px);
   @include box-shadow(0, 3px, 4px);
+
   display: flex;
   align-content: center;
   align-items: center;
@@ -52,4 +52,7 @@
     }
   }
 
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
 }

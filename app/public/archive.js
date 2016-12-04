@@ -8,7 +8,15 @@
 
     function Archive() {
         var self = this;
-        socket.emit('connect');
+
+        //load user from input and set it to model
+        self.user = ko.observable(JSON.parse($("#usrInfo").val()));
+        socket.emit('user connected', ko.toJS(self.user));
+
+        self.disconnect = function () {
+            window.location = '/login#';
+        }
+
 
         self.sprints = ko.observableArray();
         self.currentSprint = ko.observable();
@@ -17,14 +25,10 @@
         self.items = ko.observableArray();
 
         self.tickets = ko.computed(function () {
-            var tickets = self.items.sort(
-                function (left, right) {
-                    return left.position() == right.position() ? 0 : (left.position() < right.position() ? -1 : 1)
-                });
             var sourceId = self.search();
-            return ko.utils.arrayFilter(tickets(), function (item) {
-                if (!sourceId) return tickets();
+            if (!sourceId) return self.items();
 
+            return ko.utils.arrayFilter(self.items(), function (item) {
                 return item.source().indexOf(sourceId) != -1;
             });
         });

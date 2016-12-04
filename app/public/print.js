@@ -1,43 +1,34 @@
 /**
  * Created by CMeleard on 13/05/2016.
  */
-(function () {
-    'use strict';
-    var socket = io();
+var socket = io();
 
-    function Print() {
-        var self = this;
-        socket.emit('connect');
+class Print {
+    constructor() {
+        //observable
+        this.search = ko.observable('');
+        this.items = ko.observableArray();
+        //computed
+        this.tickets = ko.computed(() => {
+            let sourceId = this.search();
+            if (!sourceId) return this.items();
 
-        self.search = ko.observable('');
-        self.items = ko.observableArray();
-
-        self.tickets = ko.computed(function () {
-            var tickets = self.items.sort(
-                function (left, right) {
-                    return left.position() == right.position() ? 0 : (left.position() < right.position() ? -1 : 1)
-                });
-            var sourceId = self.search();
-            return ko.utils.arrayFilter(tickets(), function (item) {
-                if (!sourceId) return tickets();
-
+            return ko.utils.arrayFilter(this.items(), (item) => {
                 return item.source().indexOf(sourceId) != -1;
             });
         });
 
-        socket.on('send items', function (items) {
-            self.items.removeAll();
-            var datas = {items: items};
-            ko.mapping.fromJS(datas, {}, self);
+        //socket io
+        socket.emit('connect');
+        socket.on('send items', (items) => {
+            this.items.removeAll();
+            ko.mapping.fromJS(items, {}, this.items);
         });
 
-        self.print = function () {
+        this.print = () => {
             window.print();
-        }
-
+        };
     }
+}
 
-
-
-    ko.applyBindings(new Print());
-})();
+ko.applyBindings(new Print());
