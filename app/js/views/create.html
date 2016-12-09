@@ -9,28 +9,28 @@
 </head>
 <body>
 <input id="usrInfo" type="hidden" value='<%- user %>'/>
-<div class="container">
+<div id="mainApp" class="container">
     <div class="header">
-        <side-nav class="side-nav"></side-nav>
+        <side-nav></side-nav>
         <div class="main-title">Demo-organizer</div>
-        <user-connect params="{ user : user, callback : disconnect }"></user-connect>
+        <user-connect :socket="socketIO"></user-connect>
     </div>
     <h1>Ajouter un nouvel item</h1>
     <div class="item">
         <div class="content">
             <div class="content__form-group">
-                <label>Ticket</label><input type="text" data-bind="value : source"/>
+                <label>Ticket</label><input type="text" v-model="source"/>
             </div>
             <div class="content__form-group">
-                <label>Titre</label><input type="text" data-bind="value : title"/>
+                <label>Titre</label><input type="text" v-model="title"/>
             </div>
             <div class="content__form-group">
                 <label>Description</label><textarea class="form-control" rows="4" placeholder="Entrer la description"
-                                                    data-bind="value : description"></textarea>
+                                                    v-model="description"></textarea>
             </div>
         </div>
         <div class="actions">
-            <button type="button" data-bind="click : save"><i class="material-icons">done</i></button>
+            <button type="button" @click="save"><i class="material-icons">done</i></button>
         </div>
     </div>
     <div class="header">
@@ -39,7 +39,7 @@
     <div class="item">
         <div class="content">
             <div class="content__form-group">
-                <label>Titre de l'archive</label><input type="text" data-bind="value : sprint"/>
+                <label>Titre de l'archive</label><input type="text" v-model="sprint"/>
             </div>
             <p>
             <p>Attention, cette action n'est pas réverssible, ne cliquer que lorsque vous souhaitez archiver le
@@ -47,13 +47,14 @@
             </p>
         </div>
         <div class="actions">
-            <button type="button" data-bind="click : createSprint"><i class="material-icons">done</i></button>
+            <button type="button" @click="createSprint"><i class="material-icons">done</i></button>
         </div>
     </div>
 </div>
+
 <!-- depedencies -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>

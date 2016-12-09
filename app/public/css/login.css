@@ -12,12 +12,12 @@ a, a:hover, a:visited {
 button {
     border: none;
     background: transparent;
-    color: #0277BD;
+    color: #607D8B;
     cursor: pointer;
 }
 
 input {
-    border: solid 1px #0277BD;
+    border: solid 1px #607D8B;
 }
 
 input[type="text"] {
@@ -27,7 +27,7 @@ input[type="text"] {
 
 select {
     background-color: white;
-    color: #0277BD;
+    color: #607D8B;
 }
 
 a, a:hover, a:visited {
@@ -43,12 +43,12 @@ html, body, ul, li {
 
 .container {
     background: url("img/header-background.jpg") no-repeat center center #AD835B;
-    background-size: auto 100%;
+    background-size: cover;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     position: fixed;
     left: 0;
     right: 0;
@@ -57,21 +57,21 @@ html, body, ul, li {
 }
 
 .container .connect {
-    background: #0277BD;
-    border: 5px solid #0277BD;
+    background-color: #90A4AE;
+    border: 5px solid #607D8B;
     color: white;
     transition: all 0.3s linear;
     cursor: pointer;
     font-size: 2em;
     padding: 70px 0;
-    flex-grow: 1;
+    flex-basis: 30%;
     text-align: center;
 }
 
 .container .connect:hover {
-    background-color: transparent;
-    border: 5px solid #0277BD;
-    color: #0277BD;
+    background: #607D8B;
+    border: 5px solid #607D8B;
+    color: white;
 }
 
 /*# sourceMappingURL=login.css.map */

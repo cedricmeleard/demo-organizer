@@ -12,22 +12,20 @@
 
 <div class="container" id="organizerContainer">
     <div class="header">
-        <side-nav class="side-nav"></side-nav>
+        <side-nav></side-nav>
         <div class="main-title">Demo-organizer</div>
-        <user-connect params="{ user : user, callback : disconnect }"></user-connect>
+        <user-connect :socket="socketIO"></user-connect>
     </div>
     <h1>Utilisateurs connectés</h1>
     <div class="users">
-        <!-- ko foreach: users -->
         <div class="user-connected">
-                <user-item params="user : $data"></user-item>
+            <user-item v-for="user in users" :user="user"></user-item>
         </div>
-        <!-- /ko -->
     </div>
 </div>
 <!-- depedencies -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>

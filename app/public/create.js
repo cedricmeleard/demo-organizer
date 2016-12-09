@@ -1,60 +1,44 @@
-/**
- * Created by CMeleard on 09/05/2016.
- */
-(function() {
-    'use strict';
-    var socket = io();
-
-    function Creator() {
-        var self = this;
-        //load user from input and set it to model
-        self.user = ko.observable(JSON.parse($("#usrInfo").val()));
-        socket.emit('user connected', ko.toJS(self.user));
-
-        self.title = ko.observable('');
-        self.source = ko.observable('');
-        self.description = ko.observable('');
-
-        self.sprint = ko.observable('');
-
-        self.disconnect = function () {
-            window.location = '/login#';
-        }
-
-        self.createSprint = function () {
-            if (!self.sprint()) return;
-            var data = {
-                name: self.sprint()
-            }
-            socket.emit('create archive', data);
-
-            self.sprint('');
-        }
-        
-        self.save = function () {
-
-            var temp = ko.toJS(self);
-            if (!temp.title || !temp.source) {
+var socket = io();
+new Vue({
+    el: '#mainApp',
+    data: {
+        socketIO: socket,
+        title: '',
+        source: '',
+        description: '',
+        sprint: ''
+    },
+    methods: {
+        save: function () {
+            if (!this.title || !this.source) {
                 alert('vous devez saisir un ticket et un titre');
                 return;
             }
             //save
             var newItem = {
-                text : temp.title,
-                description : temp.description,
-                source : temp.source
+                text: this.title,
+                description: this.description,
+                source: this.source
             };
             socket.emit('item create', newItem);
 
-            raz();
+            this.title = '';
+            this.source = '';
+            this.description = '';
+        },
+        createSprint: function () {
+            if (!this.sprint) {
+                alert('vous devez saisir un nom pour le sprint');
+                return;
+            }
+            if (confirm('Etes-vous certain de vouloir clore le sprint? Cette action est irréversible.')) {
+
+                let data = {name: this.sprint};
+                socket.emit('create archive', data);
+                this.sprint = '';
+            }
         }
 
-        function raz(){
-            self.title('');
-            self.source('');
-            self.description('');
-        }
     }
+});
 
-    ko.applyBindings(new Creator());
-})();

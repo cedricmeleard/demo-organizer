@@ -1,136 +1,178 @@
-/**
- * Created by cedric on 24/05/16.
- */
-class ItemDemoViewModel {
-    constructor(params) {
-        //data
-        this.item = params.item;
-        this.user = params.user;
-        this.socket = params.scocket;
-        //computed
-        this.title = ko.computed(() => {
-            return this.item.source + ' - ' + this.item.text
-        });
-        //functions
-        this.affect = () => {
-            let sendData = {_id: this.item._id, user: ko.toJS(this.user)};
-            params.affect(sendData);
-        };
-        this.unAffect = (data) => {
-            params.unAffect(this.item._id, data.id);
-        };
-    }
-}
-//demo item
-ko.components.register('item-demo', {
-    viewModel: ItemDemoViewModel,
-    template: `<h2><span class="content__content-title" data-bind="text : title"></span></h2>
-    <div class="content__form-group">
-    <textarea class="form-control" rows="4" placeholder="Entrer la description" data-bind="value : item.description"></textarea>
-    </div>
+//VueJS components
 
-    <button class="middle-size" type="button" data-bind="click : affect">
-    <i class="material-icons">person_add</i>S\'affecter
-    </button>
-    <div class="user-affected-list" data-bind="foreach: item.affected">
-    <div class="user">
-    <img class="user-img" data-bind="attr : { src: photo }" />
-    <label class="user-name" data-bind="text : name" ></label>
-    <button type="button" data-bind="click : $parent.unAffect">
-    <i class="material-icons">remove_circle_outline</i>
-    </button>
-    </div>
-    </div>`
-});
-
-class UserInfo {
-    constructor(params) {
-        this.user = params.user();
-        this.disconnect = () => {
-            params.callback();
-        }
-    }
-}
-//user login view
-ko.components.register('user-connect', {
-    viewModel: UserInfo,
-    template: `<div class="user-top">
-    <img class="user-img" data-bind="attr : { src: user.photo }" />
-    <label class="user-name" data-bind="text : user.name" />
-    <button type="button" class="material-icons" data-bind="click : disconnect">exit_to_app</button>
-    </div>`
-});
-
-class MenuModel {
-    constructor() {
-        //datas
-        this.status = ko.observable(false);
-        //si on suppose que les pages sont dynamiques
-        this.items = [
-            {title: 'Accueil', anchor: '/home'},
-            {title: 'Création', anchor: '/create'},
-            {title: 'Utilisateurs', anchor: '/users'},
-            {title: 'Résumé', anchor: '/print'},
-            {title: 'Archives', anchor: '/archive'}
-        ];
-        //computed
-        this.visibleSideNav = ko.computed(() => {
-            return this.status() ? 'opened' : '';
-        });
-
-        //functions
-        this.show = () => {
-            document.querySelector('side-nav').classList.toggle('open');
-            this.status(true)
+//navigation element
+Vue.component('side-nav', {
+    data: function () {
+        return {
+            items: [
+                {title: 'Accueil', anchor: '/home'},
+                {title: 'Création', anchor: '/create'},
+                {title: 'Utilisateurs', anchor: '/users'},
+                {title: 'Résumé', anchor: '/print'},
+                {title: 'Archives', anchor: '/archive'}
+            ],
+            status: false
         };
-        this.close = () => {
-            document.querySelector('side-nav').classList.toggle('open');
-            this.status(false);
-        };
-        //accède à la section
-        this.goTo = (item) => {
+    },
+    methods: {
+        toggle: function () {
+            //toggle status
+            this.status = !this.status;
+        },
+        goTo: function (item) {
+            this.status = false;
             window.location = item.anchor;
-            this.close();
         }
-    }
-}
-ko.components.register('side-nav', {
-    viewModel: MenuModel,
-    template: `<div class="menu-title">
-    <button data-bind="click : show" ><i class="material-icons">menu</i></button>
+    },
+    template: `<div class="side-nav" :class="{ 'open' : status }"><div class="menu-title">
+    <button @click="toggle"><i class="material-icons">menu</i></button>
     </div>
-    <div class="menu" data-bind="css : visibleSideNav">
+    <div class="menu" :class="{ 'opened' : status }">
     <header class="menu-header">
-    <button class="close-menu" data-bind="click : close"><i class="material-icons">close</i></button>
+    <button class="close-menu" @click="toggle"><i class="material-icons">close</i></button>
     Menu
     </header>
-    <div class="menu-links" data-bind="foreach : items">
-    <nav data-bind="click: $parent.goTo, text : title"></nav>
+    <div class="menu-links" v-for="item in items">
+    <nav @click="goTo(item)">{{ item.title }}</nav>
+    </div>
     </div>
     </div>`
 });
 
-//TODO a revoir on devrait avoir un héritage entre cette class et ItemDemoViewModel
-class ItemDemoViewModelReadOnly {
-    constructor(params) {
-        this.item = params.item;
-        this.title = ko.computed(() => {
-            return this.item.source() + ' - ' + this.item.text();
-        });
-    }
-}
-ko.components.register('readonly-item', {
-    viewModel: ItemDemoViewModelReadOnly,
-    template: `<h2>
-    <span class="content__content-title" data-bind="text : title"></span>
+//user login view
+Vue.component('user-connect', {
+    props: {
+        socket: {
+            type: Object,
+            required: true
+        }
+    },
+    computed: {
+        user: function () {
+            let user = JSON.parse($("#usrInfo").val());
+            if (this.socket)
+                this.socket.emit('user connected', user);
+            return user;
+        }
+    },
+    methods: {
+        disconnect: function () {
+            window.location = '/login#';
+        }
+    },
+    template: `<div class="user-top">
+    <img class="user-img" :src="user.photo" />
+    <label class="user-name">{{ user.name }}</label>
+    <button type="button" class="material-icons" @click="disconnect">exit_to_app</button>
+    </div>`
+});
+
+//readonly item
+Vue.component('readonly-item', {
+    props: {
+        item: {
+            type: Object,
+            required: true
+        }
+    },
+    computed: {
+        title: function () {
+            return this.item.source + ' - ' + this.item.text
+        }
+    },
+    template: `<div class="content read-only">
+    <h2>
+    <span class="content__content-title">{{ title }}</span>
     </h2>
     <div class="content__form-group">
-    <div class="form-control" data-bind="html : item.markdown"></div>
-    <div class="user-affected-list" data-bind="foreach: item.affected">
+    <div class="form-control" v-html="item.markdown"></div>
+    <div class="user-affected-list" v-for="affected in item.affected">
     <div class="user">
-    <img class="user-img" data-bind="attr : { src: photo }" />
-    <label class="user-name" data-bind="text : name" ></label>
+    <img class="user-img" v-bind:src="affected.photo" />
+    <label class="user-name">{{ affected.name }}</label>
+    </div>
     </div>
     </div>`
+});
 
+Vue.component('edit-item', {
+    props: ['item', 'socket', 'max'],
+    methods: {
+        moveUp: function () {
+            if (this.item.position == 0) return;
+            let move = {from: this.item.position, to: this.item.position - 1};
+            this.socket.emit('item positioned', move);
+        },
+        moveDown: function () {
+            if (this.item.position == this.max) return;
+            let move = {from: this.item.position, to: this.item.position + 1};
+            this.socket.emit('item positioned', move);
+        },
+        remove: function () {
+            this.socket.emit('item deleted', this.item._id);
+        }
+    },
+    template: `
+<div class="item">
+    <div class="actions">
+        <button type="button" @click="moveUp"><i class="material-icons">keyboard_arrow_up</i></button>
+        <button type="button" @click="moveDown"><i class="material-icons">keyboard_arrow_down</i></button>
+    </div>
+    <item-demo :item="item" :socket="socket"></item-demo>
+    <div class="actions">
+        <button type="button" @click="remove"><i class="material-icons">delete</i></button>
+    </div>
+</div>`
+});
+
+//demo item
+Vue.component('item-demo', {
+    props: ['item', 'socket'],
+    computed: {
+        title: function () {
+            return this.item.source + ' - ' + this.item.text;
+        },
+        user: function () {
+            return JSON.parse($("#usrInfo").val());
+        }
+    },
+    methods: {
+        affect: function () {
+            let sendData = {_id: this.item._id, user: this.user};
+            this.socket.emit('item affected', sendData);
+        },
+        unAffect: function (userId) {
+            this.socket.emit('item unaffected', this.item._id, userId);
+        },
+        update: function (value) {
+            this.item.description = value;
+            this.socket.emit('item updated', this.item);
+        }
+    },
+    template: `
+<div class="content">
+    <h2><span class="content__content-title">{{ title }}</span></h2>
+    <div class="content__form-group">
+        <textarea class="form-control" rows="4" placeholder="Entrer la description" 
+        v-bind:value="item.description" v-on:input="update($event.target.value)"></textarea>
+    </div>
+    
+    <button class="middle-size" type="button" @click="affect"><i class="material-icons">person_add</i>S'affecter</button>
+    <div class="user-affected-list" v-for="myAffected in item.affected">
+        <div class="user">
+            <img class="user-img" :src="myAffected.photo" />
+            <label class="user-name">{{myAffected.name}}</label>
+            <button type="button" @click="unAffect(myAffected.id)"><i class="material-icons">remove_circle_outline</i></button>
+        </div>
+    </div>
+</div>`
+});
+
+//user line
+Vue.component('user-item', {
+    props: ['user'],
+    template: `<div class="user">
+        <img class="user-img" :src="user.photo" />
+        <label class="user-name">{{ user.name }}</label>
+    </div>`
 });

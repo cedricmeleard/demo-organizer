@@ -13,23 +13,19 @@
         <div class="filter-box">
             <a href="/home" class="go-login"><i class="material-icons">chevron_left</i><span class="link-text">Accueil</span></a>
             <h1>Votre démo</h1>
-            <input class="search-text" type="text" data-bind="value : search, valueUpdate : 'input'" placeholder="Filter sur le n° de ticket"/><i class="material-icons">search</i>
-            <button type="button" data-bind="click: print"><i class="material-icons">print</i></button>
+            <input class="search-text" type="text" v-model="search" placeholder="Filter sur le n° de ticket"/><i
+                class="material-icons">search</i>
+            <button type="button" @click="print"><i class="material-icons">print</i></button>
         </div>
     </div>
 
-
-    <!-- ko foreach : tickets -->
-    <div class="item">
-        <div class="content read-only"
-             data-bind="component : { name : 'readonly-item', params : { item : $data } }"></div>
+    <div class="item" v-for="ticket in tickets">
+        <readonly-item :item="ticket"></readonly-item>
     </div>
-    <!-- /ko -->
 </div>
 <!-- depedencies -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>

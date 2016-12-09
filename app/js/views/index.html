@@ -12,29 +12,18 @@
 
 <div class="container" id="organizerContainer">
     <div class="header">
-        <side-nav class="side-nav"></side-nav>
+        <side-nav></side-nav>
         <div class="main-title">Demo-organizer</div>
-        <user-connect params="{ user : user, callback : disconnect }"></user-connect>
+        <user-connect :socket="socketIO"></user-connect>
     </div>
     <h1>Bienvenue dans l'organisation de la démo</h1>
-    <!-- ko foreach : items -->
-    <div class="item">
-        <div class="actions">
-            <button type="button" data-bind="click : $parent.moveUp"><i class="material-icons">keyboard_arrow_up</i></button>
-            <button type="button" data-bind="click : $parent.moveDown"><i class="material-icons">keyboard_arrow_down</i></button>
-        </div>
-        <div class="content"
-             data-bind="component : { name : 'item-demo', params : { item : $data, user : $root.user, affect : $root.affect, unAffect : $root.unAffect } }"></div>
-        <div class="actions">
-            <button type="button" data-bind="click : $parent.delete"><i class="material-icons">delete</i></button>
-        </div>
-    </div>
-    <!-- /ko -->
+    <edit-item v-for="item in items" :item="item" :socket="socketIO" :max="currentLength"></edit-item>
+
+
 </div>
 <!-- depedencies -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>

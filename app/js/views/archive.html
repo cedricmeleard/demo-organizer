@@ -11,32 +11,32 @@
 <input id="usrInfo" type="hidden" value='<%- user %>'/>
 <div class="container" id="organizerContainer">
     <div class="header">
-        <side-nav class="side-nav"></side-nav>
+        <side-nav></side-nav>
         <div class="main-title">Demo-organizer</div>
-        <user-connect params="{ user : user, callback : disconnect }"></user-connect>
+        <user-connect :socket="socketIO"></user-connect>
     </div>
     <h1>Consultation des archives</h1>
     <div>
         <div class="filter-box">
-            <input class="search-text" type="text" data-bind="value : search, valueUpdate : 'input'"
-                   placeholder="Filter sur le n° de ticket"/><i class="material-icons">search</i>
-            <button type="button" data-bind="click: print"><i class="material-icons">print</i></button>
-            <select class="search-text"
-                    data-bind="options: sprints, optionsValue : '_id',optionsText: 'name', value: currentSprint, optionsCaption: 'Choisir un sprint...'"></select>
-            <button type="button" data-bind="click: load"><i class="material-icons">cloud_upload</i></button>
+            <input class="search-text" type="text" v-model="search" placeholder="Filter sur le n° de ticket"/><i
+                class="material-icons">search</i>
+            <button type="button" @click="print"><i class="material-icons">print</i></button>
+
+            <select class="search-text" v-model="currentSprint">
+                <option v-for="sprint in sprints" :value="sprint._id">
+                    {{ sprint.name }}
+                </option>
+            </select>
+            <button type="button" @click="load"><i class="material-icons">cloud_upload</i></button>
         </div>
     </div>
-    <!-- ko foreach : tickets -->
-    <div class="item">
-        <div class="content read-only"
-             data-bind="component : { name : 'readonly-item', params : { item : $data } }"></div>
+    <div class="item" v-for="ticket in tickets">
+        <readonly-item :item="ticket"></readonly-item>
     </div>
-    <!-- /ko -->
 </div>
 <!-- depedencies -->
 <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.js"></script>
 <!-- app -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>

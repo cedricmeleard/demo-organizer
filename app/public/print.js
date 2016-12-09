@@ -1,34 +1,31 @@
-/**
- * Created by CMeleard on 13/05/2016.
- */
 var socket = io();
 
-class Print {
-    constructor() {
-        //observable
-        this.search = ko.observable('');
-        this.items = ko.observableArray();
-        //computed
-        this.tickets = ko.computed(() => {
-            let sourceId = this.search();
-            if (!sourceId) return this.items();
-
-            return ko.utils.arrayFilter(this.items(), (item) => {
-                return item.source().indexOf(sourceId) != -1;
+var app = new Vue({
+    el: '#organizerContainer',
+    data: {
+        search: '',
+        items: []
+    },
+    computed: {
+        tickets: function () {
+            if (!this.search) return this.items;
+            return this.items.filter(item => {
+                return item.source.toLocaleLowerCase().indexOf(this.search.toLocaleLowerCase()) != -1;
             });
-        });
-
-        //socket io
-        socket.emit('connect');
-        socket.on('send items', (items) => {
-            this.items.removeAll();
-            ko.mapping.fromJS(items, {}, this.items);
-        });
-
-        this.print = () => {
+        },
+    },
+    methods: {
+        print: function () {
             window.print();
-        };
-    }
-}
+        },
+        init: function () {
+            socket.emit('connect');
 
-ko.applyBindings(new Print());
+            socket.on('send items', (datas) => {
+                this.items = datas;
+            });
+        }
+    }
+});
+
+app.init();

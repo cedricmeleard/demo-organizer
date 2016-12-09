@@ -16,13 +16,13 @@ html, body, ul, li {
 
 .container {
   background: url("img/header-background.jpg") no-repeat center center #AD835B;
-  background-size: auto 100%;
+  background-size: cover;
 
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   position: fixed;
   left: 0;
   right: 0;
@@ -30,7 +30,8 @@ html, body, ul, li {
   bottom: 0;
 
   .connect {
-    background: $background-color;
+    background-color: $primary-color;
+
     border: 5px solid $background-color;
     color: $item-background;
 
@@ -39,13 +40,14 @@ html, body, ul, li {
     font-size: 2em;
     padding: 70px 0;
 
-    flex-grow: 1;
+    flex-basis: 30%;
     text-align: center;
 
     &:hover {
-      background-color: transparent; //$item-background;
+      background: $background-color;
       border: 5px solid $background-color;
-      color: $background-color;
+      color: $item-background;
+
     }
   }
 }
