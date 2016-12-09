@@ -3,10 +3,10 @@
 ## Description
 
 A little app helping team to organize a preview.
-Each dev can connect using google account, then affects a item to him, and at last add a description of what he is going
-to show
+Each user can connect using his google account.
 
-Items can be reorganized dynamically.
+Then you can create sprint item and organize them quickly.
+Once you demo is over you can archive a entire sprint and start a new one.
 
 ## Install
 
@@ -20,47 +20,44 @@ and sass : [Sass](http://sass-lang.com/install)
 
 ## Start
 
-Once everything is set up, you can use package.json to configure project
-run
+Once everything is set up, you can use package.json or gulpfile
+so, run:
 
     npm install
 
 then
 
-    npm start
+    gulp
 
 ## Use
 
-You need to connect using google account, then there is 2 pages you can access.
-by default server start listening on port 81 (see index.js)
-then my google code config is set for a callback url on localhost:81 to, those things needs to be changed with
-your own values in app/js/config.js
+You need to connect using google account, if you do not want to connect you'll should see current
+demo preparing.
 
-### http://localhost:81/home
-root access, where you can see item and modify them
+by default server start listening on port 5000 (see index.js and config.js)
+then my google code config is set for a callback url on localhost:5000/oauth2callback too,
+ 
+those things needs to be changed with your own values in app/js/config.js
 
-### http://localhost:81/create
-allow a user to add a new item
-
-### http://localhost:81/print
-allow an unauthenticated user to see what's going on
-
-### http://localhost:81/users
-display actually connected users
 
 ## What's next?
 
 App is in her first stage developpment, many things are still todos and other need refactoring.
 Let's see what is in backlog:
 
-- Save an organization in database, load a previous organization, screen management for this
 - Refactor authentication, using multiple services such as facebook ou twitter
-- Add a printable version screen
-- Add a navigation menu to switch between screen (edit/create/view/manage/history)
 - Add a disconnect function
-- Allow use of text markeup in description
-- Allow mutliple user affected on 1 item, set one of them as lead (will make presentation)
 - Allow grouping/ungrouping tickets (many little tickets for functionnality presentation in a row)
 - Better design
-- Particpant list
 - chatroom for participants
+
+## what's new?
+
+> Release 1.0.0 - major 1 
+
+changing from knockout to vuejs
+adding gulpfile
+
+> before 1.0.0
+
+Manage items

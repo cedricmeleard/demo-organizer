@@ -1,7 +1,7 @@
 {
   "name": "demo-organizer",
   "description": "Implement a demo organisation app helper",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Cedric Meleard",
   "license": "MIT",
   "private": true,
