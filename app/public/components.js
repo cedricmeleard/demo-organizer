@@ -47,11 +47,18 @@ Vue.component('user-connect', {
             required: true
         }
     },
+    data: function () {
+        return {
+            socketStarted: false
+        }
+    },
     computed: {
         user: function () {
             let user = JSON.parse($("#usrInfo").val());
-            if (this.socket)
+            if (this.socket && !this.socketStarted) {
                 this.socket.emit('user connected', user);
+                this.socketStarted = true;
+            }
             return user;
         }
     },
@@ -134,6 +141,14 @@ Vue.component('item-demo', {
         },
         user: function () {
             return JSON.parse($("#usrInfo").val());
+        },
+        showadd: function () {
+            if (!this.item.affected.length) return true;
+
+            let tmp = this.user;
+            return !this.item.affected.find(function (element) {
+                return tmp.id === element.id;
+            });
         }
     },
     methods: {
@@ -156,14 +171,17 @@ Vue.component('item-demo', {
         <textarea class="form-control" rows="4" placeholder="Entrer la description" 
         v-bind:value="item.description" v-on:input="update($event.target.value)"></textarea>
     </div>
-    
-    <button class="middle-size" type="button" @click="affect"><i class="material-icons">person_add</i>S'affecter</button>
+    <transition name="fade">
+        <button v-if="showadd" class="middle-size" type="button" @click="affect"><i class="material-icons">person_add</i>S'affecter</button>
+    </transition>
     <div class="user-affected-list" v-for="myAffected in item.affected">
-        <div class="user">
-            <img class="user-img" :src="myAffected.photo" />
-            <label class="user-name">{{myAffected.name}}</label>
-            <button type="button" @click="unAffect(myAffected.id)"><i class="material-icons">remove_circle_outline</i></button>
-        </div>
+        <transition name="fade">
+            <div class="user">
+                <img class="user-img" :src="myAffected.photo" />
+                <label class="user-name">{{myAffected.name}}</label>
+                <button type="button" @click="unAffect(myAffected.id)"><i class="material-icons">remove_circle_outline</i></button>
+            </div>
+        </transition>
     </div>
 </div>`
 });

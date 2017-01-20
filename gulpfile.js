@@ -1,6 +1,3 @@
-/**
- * Created by cedric on 29/11/16.
- */
 var exec = require('child_process').exec;
 var gulp = require('gulp');
 
@@ -13,7 +10,7 @@ gulp.task('server', function (cb) {
 });
 
 gulp.task('mongo', function (cb) {
-    exec('sudo mongod --dbpath ./data/db', function (err, stdout, stderr) {
+    exec('mongod --dbpath ./data/db', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);

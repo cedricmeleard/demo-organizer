@@ -53,3 +53,11 @@ h1 {
 
 //need to be positioned at the end of file
 @import "medias/print";
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}

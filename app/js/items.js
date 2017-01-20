@@ -11,6 +11,8 @@ function Items(io, markdown, Models) {
         sendItems();
         sendSprints();
 
+        console.log('user connection start');
+
         socket.on('disconnect', function () {
             //remove user with socket.id from the list
             var user = users.getByProperty('connectionIds', socket.id);
@@ -26,6 +28,9 @@ function Items(io, markdown, Models) {
         });
 
         socket.on('user connected', function (user) {
+
+            console.log('user connected');
+
             var exists = users.getById(user.id);
             if (!exists) {
                 users.push(user);
@@ -118,25 +123,24 @@ function Items(io, markdown, Models) {
         });
 
         socket.on('create archive', function (data) {
-            //data { name : 'name fo sprint' }
-            var sprint = new Sprint({
-                name: data.name
-            });
-            sprint.save(function (err, saved) {
-                if (err) console.error(err);
-                Item.find({sprint: null}, function (err, items) {
-                    if (err) console.error(err);
-                    items.forEach(function (item) {
-                        item.sprint = saved._id;
-                        item.save();
+            //data { name : 'sprint name' }
+            new Sprint({name: data.name})
+                .save().then(function (saved) {
+                Item.update(
+                    {sprint: null},
+                    {sprint: saved._id},
+                    {multi: true},
+                    (err) => {
+                        if (err)
+                            console.log(err);
+                        sendItems();
                     });
-                    sendItems();
-                });
             });
         });
 
         socket.on('load archive', function (sprintId) {
-            Item.find({sprint: sprintId}).sort('position')
+            Item.find({sprint: sprintId})
+                .sort('position')
                 .exec((err, items) => {
                     if (err) console.error(err);
                     io.emit('send archive', items);
@@ -176,34 +180,39 @@ function Items(io, markdown, Models) {
     }
 
     function deleteItem(itemId, callback) {
-        Item.findById(itemId, function (err, item) {
-            if (err) console.error(err);
 
-            //decrease position
-            Item.update({position: {$gt: item.position}}, {$inc: {position: -1}}, {multi: true}, function (err) {
-                if (err) console.error(err);
+        Item.remove({'_id': itemId})
+            .then(function (item) {
+                Item.update(
+                    {position: {$gt: item.position}},
+                    {$inc: {position: -1}},
+                    {multi: true},
+                    function (err) {
+                        if (err) console.error(err);
+
+                        if (callback) callback();
+                    });
             });
-
-            item.remove();
-            if (callback) callback();
-        });
     }
 
     function sendItems() {
         //working on not linked items
-        Item.find({sprint: null}).sort('position')
+        Item.find({sprint: null})
+            .sort('position')
             .exec((err, items) => {
             if (err) return console.error(err);
-            io.emit('send items', items);
+                io.emit('send items', items);
         });
     }
 
     function sendSprints() {
-        Sprint.find(function (err, sprints) {
-            if (err) console.error(err);
+        Sprint.find()
+            .sort('name')
+            .exec((err, sprints) => {
+                if (err) console.error(err);
 
-            io.emit('load sprints', sprints);
-        });
+                io.emit('load sprints', sprints);
+            });
     }
 
     function sendUsers() {

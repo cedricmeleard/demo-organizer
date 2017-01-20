@@ -61,10 +61,10 @@ select {
 .menu {
     position: fixed;
     top: 0;
-    left: -312px;
+    left: -80%;
     background-color: #FFF;
     z-index: 2;
-    width: 310px;
+    width: 80%;
     height: 100%;
     transition: all .3s ease-in;
     box-shadow: 2px 0 2px rgba(0, 0, 0, 0.3);
@@ -321,6 +321,14 @@ h1 {
         padding-bottom: 100px;
         margin-bottom: 40px;
     }
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-active {
+    opacity: 0;
 }
 
 /*# sourceMappingURL=main.css.map */

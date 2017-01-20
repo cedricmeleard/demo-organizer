@@ -32,7 +32,6 @@ new Vue({
                 return;
             }
             if (confirm('Etes-vous certain de vouloir clore le sprint? Cette action est irréversible.')) {
-
                 let data = {name: this.sprint};
                 socket.emit('create archive', data);
                 this.sprint = '';
