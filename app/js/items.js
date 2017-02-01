@@ -28,9 +28,6 @@ function Items(io, markdown, Models) {
         });
 
         socket.on('user connected', function (user) {
-
-            console.log('user connected');
-
             var exists = users.getById(user.id);
             if (!exists) {
                 users.push(user);
@@ -180,19 +177,23 @@ function Items(io, markdown, Models) {
     }
 
     function deleteItem(itemId, callback) {
+        Item.findById({'_id': itemId}).then(function (item) {
+            Item.update(
+                {position: {$gt: item.position}},
+                {$inc: {position: -1}},
+                {multi: true},
+                function (err) {
+                    if (err) console.error(err);
 
-        Item.remove({'_id': itemId})
-            .then(function (item) {
-                Item.update(
-                    {position: {$gt: item.position}},
-                    {$inc: {position: -1}},
-                    {multi: true},
-                    function (err) {
-                        if (err) console.error(err);
+                    if (callback) callback();
+                });
+        }).then(function () {
+            Item.remove({'_id': itemId})
+                .then(function (item) {
+                    console.log('removing');
 
-                        if (callback) callback();
-                    });
-            });
+                });
+        });
     }
 
     function sendItems() {
