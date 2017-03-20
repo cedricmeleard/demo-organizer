@@ -35,18 +35,18 @@
   transition: all .3s ease-in;
   padding: 2px;
 
-  @include border-radius(27px);
+  @include border-radius($user-top-width / 2);
 
   .user-img {
-    @include round-img(50px);
+    @include round-img($user-top-width);
   }
 
   .user-name {
     overflow: hidden;
     padding-left: 0;
     font-size: 1.5em;
-    height: 50px;
-    line-height: 50px;
+    height: $user-top-width;
+    line-height: $user-top-width;
     width: 0;
   }
   &:hover {

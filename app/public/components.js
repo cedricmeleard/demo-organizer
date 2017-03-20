@@ -87,19 +87,21 @@ Vue.component('readonly-item', {
             return this.item.source + ' - ' + this.item.text
         }
     },
-    template: `<div class="content read-only">
+    template: `
+<div class="content read-only">
     <h2>
-    <span class="content__content-title">{{ title }}</span>
+        <span class="content__content-title">{{ title }}</span>
     </h2>
     <div class="content__form-group">
-    <div class="form-control" v-html="item.markdown"></div>
+        <div class="form-control" v-html="item.markdown"></div>
+    </div>
     <div class="user-affected-list" v-for="affected in item.affected">
-    <div class="user">
-    <img class="user-img" v-bind:src="affected.photo" />
-    <label class="user-name">{{ affected.name }}</label>
+        <div class="user">
+            <img class="user-img" v-bind:src="affected.photo" />
+            <label class="user-name">{{ affected.name }}</label>
+        </div>
     </div>
-    </div>
-    </div>`
+</div>`
 });
 
 Vue.component('edit-item', {
@@ -168,7 +170,7 @@ Vue.component('item-demo', {
 <div class="content">
     <h2><span class="content__content-title">{{ title }}</span></h2>
     <div class="content__form-group">
-        <textarea class="form-control" rows="4" placeholder="Entrer la description" 
+        <textarea class="form-control" rows="6" placeholder="Entrer la description" 
         v-bind:value="item.description" v-on:input="update($event.target.value)"></textarea>
     </div>
     <transition name="fade">

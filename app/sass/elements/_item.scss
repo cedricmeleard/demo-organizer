@@ -41,6 +41,19 @@
         margin: 16px auto;
         display: flex;
         flex-direction: row;
+
+        blockquote {
+          border-left: solid 5px $primary-color;
+          padding-left: 5px;
+          margin: 20px 10px;
+        }
+      }
+
+      textarea {
+        border-radius: 3px;
+        border-color: $primary-color;
+        padding: 5px;
+        resize: vertical;
       }
 
       label {

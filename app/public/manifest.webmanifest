@@ -1,0 +1,12 @@
+{
+  "name": "Demo organizer",
+  "short_name": "Demo ORG",
+  "start_url": "./?utm_source=web_app_manifest",
+  "display": "standalone",
+  "related_applications": [
+    {
+      "platform": "web"
+    }
+  ],
+  "splash_screens": []
+}

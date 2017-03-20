@@ -1,0 +1,34 @@
+@media screen and (max-width: 650px) {
+  .menu {
+    left: -80%;
+    width: 80%;
+  }
+
+  .user-top {
+    $user-top-width: 30px;
+  }
+
+  .main-title {
+    display: none;
+  }
+
+  .item {
+
+    padding: 8px;
+
+    .content {
+      h2 {
+        margin: 10px 0;
+      }
+
+      .user-name {
+        font-size: 1em;
+      }
+
+    }
+
+    .actions {
+      width: 13%;
+    }
+  }
+}

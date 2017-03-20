@@ -61,10 +61,10 @@ select {
 .menu {
     position: fixed;
     top: 0;
-    left: -80%;
+    left: -40%;
     background-color: #FFF;
     z-index: 2;
-    width: 80%;
+    width: 40%;
     height: 100%;
     transition: all .3s ease-in;
     box-shadow: 2px 0 2px rgba(0, 0, 0, 0.3);
@@ -143,10 +143,10 @@ select {
     color: #607D8B;
     transition: all .3s ease-in;
     padding: 2px;
-    -webkit-border-radius: 27px;
-    -moz-border-radius: 27px;
-    -ms-border-radius: 27px;
-    border-radius: 27px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    border-radius: 25px;
 }
 
 .user-top .user-img {
@@ -225,6 +225,19 @@ select {
     flex-direction: row;
 }
 
+.item .content__form-group .form-control blockquote {
+    border-left: solid 5px #90A4AE;
+    padding-left: 5px;
+    margin: 20px 10px;
+}
+
+.item .content__form-group textarea {
+    border-radius: 3px;
+    border-color: #90A4AE;
+    padding: 5px;
+    resize: vertical;
+}
+
 .item .content__form-group label {
     min-width: 150px;
     font-size: 1.2em;
@@ -257,6 +270,32 @@ select {
     width: 100%;
 }
 
+@media screen and (max-width: 650px) {
+    .menu {
+        left: -80%;
+        width: 80%;
+    }
+
+    .main-title {
+        display: none;
+    }
+
+    .item {
+        padding: 8px;
+    }
+
+    .item .content h2 {
+        margin: 10px 0;
+    }
+
+    .item .content .user-name {
+        font-size: 1em;
+    }
+
+    .item .actions {
+        width: 13%;
+    }
+}
 body {
     background: #607D8B;
     color: white;
@@ -322,7 +361,6 @@ h1 {
         margin-bottom: 40px;
     }
 }
-
 .fade-enter-active, .fade-leave-active {
     transition: opacity 0.5s;
 }

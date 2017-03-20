@@ -21,11 +21,12 @@ var app = new Vue({
         init: function () {
             socket.emit('connect');
 
-            socket.on('send items', (datas) => {
-                this.items = datas;
-            });
         }
     }
+});
+
+socket.on('send items', (datas) => {
+    app.items = datas;
 });
 
 app.init();

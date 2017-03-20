@@ -21,5 +21,4 @@ socket.on('send items', function (datas) {
     app.items = datas;
 });
 
-
 app.init();
