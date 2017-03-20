@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  magin: 0;
+  background: $background-color;
+  color: $item-background;
+  font-family: $font-stack;
+
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a, a:hover, a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  border: none;
+  background: transparent;
+  color: $primary-color;
+  cursor: pointer;
+}
+
+input {
+
+  &[type="text"] {
+    border: solid 1px $primary-color;
+    border-radius: 5px;
+    padding: 10px;
+
+    width: 100%;
+  }
+}
+
+select {
+  background-color: $item-background;
+  color: $accent-color;
+}
+
+h1 {
+  text-align: center;
+}
+
+.material-icons {
+  //color: $accent-color;
+}
+
+.middle-size {
+  font-size: 1.2em;
+  line-height: 1.2em;
+
+  .material-icons {
+    line-height: 1.2em;
+    vertical-align: bottom;
+  }
+}

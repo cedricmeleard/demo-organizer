@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Création d'un élément</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -13,7 +14,6 @@
 <div id="mainApp" class="container">
     <div class="header">
         <side-nav></side-nav>
-        <div class="main-title">Demo-organizer</div>
         <user-connect :socket="socketIO"></user-connect>
     </div>
     <h1>Ajouter un nouvel item</h1>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="actions">
-            <button type="button" @click="save"><i class="material-icons">done</i></button>
+            <button type="button" @click="save"><i class="material-icons">check_circle</i></button>
         </div>
     </div>
     <div class="header">
@@ -43,12 +43,12 @@
                 <label>Titre de l'archive</label><input type="text" v-model="sprint"/>
             </div>
             <p>
-            <p>Attention, cette action n'est pas réverssible, ne cliquer que lorsque vous souhaitez archiver le
+            <p>Attention, cette action n'est pas réversible, ne cliquer que lorsque vous souhaitez archiver le
                 sprint</p>
             </p>
         </div>
         <div class="actions">
-            <button type="button" @click="createSprint"><i class="material-icons">done</i></button>
+            <button type="button" @click="createSprint"><i class="material-icons">check_circle</i></button>
         </div>
     </div>
 </div>

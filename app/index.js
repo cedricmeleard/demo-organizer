@@ -26,6 +26,6 @@ db.once('open', function () {
 });
 
 //START SERVER
-http.listen(81, function () {
-    console.log('listening on *:81');
+http.listen(5000, function () {
+    console.log('listening on *:5000');
 });

@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  max-width: $screen-max-width;
+
+  .search-text {
+    max-width: 150px;
+    padding: 5px;
+
+  }
+}

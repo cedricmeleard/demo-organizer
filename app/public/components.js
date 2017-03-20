@@ -168,7 +168,7 @@ Vue.component('item-demo', {
     },
     template: `
 <div class="content">
-    <h2><span class="content__content-title">{{ title }}</span></h2>
+    <div class="content__content-title">{{ title }}</div>
     <div class="content__form-group">
         <textarea class="form-control" rows="6" placeholder="Entrer la description" 
         v-bind:value="item.description" v-on:input="update($event.target.value)"></textarea>

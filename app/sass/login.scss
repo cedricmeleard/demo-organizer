@@ -1,5 +1,5 @@
-@import "partials/vars";
-@import "partials/reset";
+@import "abstracts/variables";
+@import "base/reset";
 
 a, a:hover, a:visited {
   text-decoration: none;
@@ -15,7 +15,7 @@ html, body, ul, li {
 }
 
 .container {
-  background: url("img/header-background.jpg") no-repeat center center #AD835B;
+  background: url("img/header-background-3.jpg") no-repeat left center #AD835B;
   background-size: cover;
 
   display: flex;
@@ -30,18 +30,20 @@ html, body, ul, li {
   bottom: 0;
 
   .connect {
+    text-transform: uppercase;
     background-color: $primary-color;
 
-    border: 5px solid $background-color;
+    border: 5px solid $primary-color;
     color: $item-background;
 
     transition: all 0.3s linear;
     cursor: pointer;
     font-size: 2em;
-    padding: 70px 0;
-
-    flex-basis: 30%;
+    line-height: 2em;
     text-align: center;
+
+    padding: 40px;
+    flex: 0 0 33%;
 
     &:hover {
       background: $background-color;
@@ -49,5 +51,26 @@ html, body, ul, li {
       color: $item-background;
 
     }
+
+    .material-icons {
+      color: $item-background;
+      font-size: 1.2em;
+      vertical-align: sub;
+      margin-right: 5px;
+    }
   }
+}
+
+@media screen and (max-width: 650px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .connect {
+    width: 80%;
+    flex: 0 0 auto !important;
+  }
+
 }

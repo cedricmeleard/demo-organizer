@@ -1,33 +1,59 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  magin: 0;
+  background: #35495E;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
 ul, li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a, a:hover, a:visited {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 button {
-    border: none;
-    background: transparent;
-    color: #607D8B;
-    cursor: pointer;
-}
-
-input {
-    border: solid 1px #607D8B;
+  border: none;
+  background: transparent;
+  color: #41B883;
+  cursor: pointer;
 }
 
 input[type="text"] {
-    width: 100%;
-    padding: 5px;
+  border: solid 1px #41B883;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
 }
 
 select {
-    background-color: white;
-    color: #607D8B;
+  background-color: white;
+  color: #35495E;
+}
+
+h1 {
+  text-align: center;
+}
+
+.middle-size {
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+
+.middle-size .material-icons {
+  line-height: 1.2em;
+  vertical-align: bottom;
 }
 
 a, a:hover, a:visited {
@@ -35,43 +61,66 @@ a, a:hover, a:visited {
   color: white; }
 
 html, body, ul, li {
-  font-family: Arial, sans-serif; }
+  font-family: "Open Sans", sans-serif;
+}
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .container {
-    background: url("img/header-background.jpg") no-repeat center center #AD835B;
-    background-size: cover;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+  background: url("img/header-background-3.jpg") no-repeat left center #AD835B;
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .container .connect {
-    background-color: #90A4AE;
-    border: 5px solid #607D8B;
+  text-transform: uppercase;
+  background-color: #41B883;
+  border: 5px solid #41B883;
     color: white;
     transition: all 0.3s linear;
     cursor: pointer;
     font-size: 2em;
-    padding: 70px 0;
-    flex-basis: 30%;
+  line-height: 2em;
     text-align: center;
+  padding: 40px;
+  flex: 0 0 33%;
 }
 
 .container .connect:hover {
-    background: #607D8B;
-    border: 5px solid #607D8B;
-    color: white;
+  background: #35495E;
+  border: 5px solid #35495E;
+  color: white;
+}
+
+.container .connect .material-icons {
+  color: white;
+  font-size: 1.2em;
+  vertical-align: sub;
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 650px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .connect {
+    width: 80%;
+    flex: 0 0 auto !important;
+  }
 }
 
 /*# sourceMappingURL=login.css.map */

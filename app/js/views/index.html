@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Demo Organizer</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -14,12 +15,10 @@
 <div class="container" id="organizerContainer">
     <div class="header">
         <side-nav></side-nav>
-        <div class="main-title">Demo-organizer</div>
         <user-connect :socket="socketIO"></user-connect>
     </div>
     <h1>Organisation de la démo</h1>
     <edit-item v-for="item in items" :item="item" :socket="socketIO" :max="currentLength"></edit-item>
-
 
 </div>
 <!-- depedencies -->

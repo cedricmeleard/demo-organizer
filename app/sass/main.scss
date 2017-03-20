@@ -1,56 +1,13 @@
-@import "partials/vars";
-@import "partials/reset";
-@import "partials/mixins";
-@import "elements/menu";
-@import "elements/user";
-@import "elements/item";
-@import "elements/print";
-@import "elements/responsive";
+@import "abstracts/variables";
+@import "base/reset";
+@import "base/mixins";
+@import "layout/layout";
+@import "components/menu";
+@import "components/user";
+@import "components/item";
+@import "components/print";
+@import "medias/responsive";
 
-body {
-  background: $background-color;
-  color: $item-background;
-  font-family: $font-stack;
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-h1 {
-  text-align: center;
-}
-
-.material-icons {
-  color: $accent-color;
-  font-size: 1em;
-  line-height: 1em;
-}
-.middle-size  {
-  font-size: 1.2em;
-  line-height: 1.2em;
-
-  .material-icons {
-    line-height: 1.2em;
-    vertical-align: bottom;
-  }
-}
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 1;
-  max-width: $screen-max-width;
-
-  .search-text {
-    max-width: 150px;
-    padding: 5px;
-
-  }
-}
 
 //need to be positioned at the end of file
 @import "medias/print";

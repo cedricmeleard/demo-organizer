@@ -1,31 +1,20 @@
-.user-affected-list {
-  margin-top: 15px;
-}
+
 .user {
   display: flex;
   flex-wrap: nowrap;
-  flex-direction: row;
+  font-size: 1.5em;
+  line-height: 30px;
+}
 
-  &-connected {
-    margin: 16px auto;
+.user-img {
+  @include round-img(30px);
+}
 
-  }
-
-  &-img {
-    @include round-img(30px);
-  }
-
-  &-name {
-    padding-left: 10px;
-    font-size: 1.2em;
-    height: 30px;
-    line-height: 30px;
-  }
-
-  .material-icons {
-    font-size: 1.5em;
-    line-height: 30px;
-  }
+.user-name {
+  padding-left: 10px;
+  font-size: 1.2em;
+  height: 30px;
+  line-height: 30px;
 }
 
 .user-top {
@@ -56,5 +45,16 @@
       width: inherit;
       padding-left: 10px;
     }
+  }
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .user-connected {
+    margin: 16px;
   }
 }
