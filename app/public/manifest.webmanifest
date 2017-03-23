@@ -1,12 +1,27 @@
 {
-  "name": "Demo organizer",
+  "lang": "fr",
+  "name": "Demo organiZer",
+  "description": "Organisez votre démo de sprint",
   "short_name": "Demo ORG",
   "start_url": "./?utm_source=web_app_manifest",
   "display": "standalone",
+  "orientation": "portrait",
+  "theme_color" : "#35495E",
+  "background_color": "#41B883",
   "related_applications": [
     {
       "platform": "web"
     }
   ],
-  "splash_screens": []
+  "splash_screens": [
+    {
+      "src": "icon/demoz_splashscreen.png",
+      "sizes": "555x370 1920x1080"
+    }
+  ],
+  "icons": [
+    {
+      "src": "icon/demoz_launcher.jpg",
+      "sizes": "48x48 72x72 96x96 128x128 144x144 256x256"
+    }]
 }
