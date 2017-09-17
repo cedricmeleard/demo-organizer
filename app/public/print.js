@@ -1,6 +1,6 @@
-var socket = io();
+const socket = io();
 
-var app = new Vue({
+const app = new Vue({
     el: '#organizerContainer',
     data: {
         search: '',
@@ -10,7 +10,7 @@ var app = new Vue({
         tickets: function () {
             if (!this.search) return this.items;
             return this.items.filter(item => {
-                return item.source.toLocaleLowerCase().indexOf(this.search.toLocaleLowerCase()) != -1;
+                return item.source.toLocaleLowerCase().indexOf(this.search.toLocaleLowerCase()) !== -1;
             });
         },
     },
@@ -25,8 +25,8 @@ var app = new Vue({
     }
 });
 
-socket.on('send items', (datas) => {
-    app.items = datas;
+socket.on('send items', data => {
+    app.items = data;
 });
 
 app.init();

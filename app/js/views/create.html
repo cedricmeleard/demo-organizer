@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="manifest" href="manifest.webmanifest">
-    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 <input id="usrInfo" type="hidden" value='<%- user %>'/>
@@ -34,9 +33,8 @@
             <button type="button" @click="save"><i class="material-icons">check_circle</i></button>
         </div>
     </div>
-    <div class="header">
-        <h1>Valider le sprint</h1>
-    </div>
+
+    <h1>Valider le sprint</h1>
     <div class="item">
         <div class="content">
             <div class="content__form-group">
@@ -60,5 +58,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="components.js"></script>
 <script src="create.js"></script>
+
+<link rel="stylesheet" href="css/main.css">
 </body>
 </html>

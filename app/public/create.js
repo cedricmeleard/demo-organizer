@@ -1,4 +1,5 @@
-var socket = io();
+const socket = io();
+
 new Vue({
     el: '#mainApp',
     data: {
@@ -15,7 +16,7 @@ new Vue({
                 return;
             }
             //save
-            var newItem = {
+            const newItem = {
                 text: this.title,
                 description: this.description,
                 source: this.source

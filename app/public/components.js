@@ -24,6 +24,11 @@ Vue.component('side-nav', {
             window.location = item.anchor;
         }
     },
+    computed: {
+        tabIndex: function () {
+            return this.status ? '0' : '';
+        }
+    },
     template: `<div class="side-nav" :class="{ 'open' : status }"><div class="menu-title">
     <button @click="toggle"><i class="material-icons">menu</i></button>
     </div>
@@ -32,8 +37,8 @@ Vue.component('side-nav', {
     <button class="close-menu" @click="toggle"><i class="material-icons">close</i></button>
     Menu
     </header>
-    <div class="menu-links" v-for="item in items">
-    <nav @click="goTo(item)">{{ item.title }}</nav>
+    <div class="menu-links" :tabindex="tabIndex" v-for="item in items" @keyup.enter="goTo(item)">
+    <nav  @click="goTo(item)">{{ item.title }}</nav>
     </div>
     </div>
     </div>`

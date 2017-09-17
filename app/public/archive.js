@@ -1,6 +1,6 @@
-var socket = io();
+const socket = io();
 
-var app = new Vue({
+const app = new Vue({
     el: '#organizerContainer',
     data: {
         socketIO: socket,
@@ -32,9 +32,9 @@ var app = new Vue({
 });
 
 app.init();
-socket.on('send archive', function (datas) {
-    app.items = datas;
+socket.on('send archive', data => {
+    app.items = data;
 });
-socket.on('load sprints', function (datas) {
-    app.sprints = datas;
+socket.on('load sprints', data => {
+    app.sprints = data;
 });

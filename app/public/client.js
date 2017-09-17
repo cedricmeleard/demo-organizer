@@ -1,5 +1,5 @@
-var socket = io();
-var app = new Vue({
+const socket = io();
+const app = new Vue({
     el: "#organizerContainer",
     data: {
         items: [],
@@ -17,7 +17,7 @@ var app = new Vue({
     }
 });
 
-socket.on('send items', function (datas) {
+socket.on('send items', datas => {
     app.items = datas;
 });
 

@@ -76,15 +76,16 @@ h1 {
 .menu {
   position: fixed;
   top: 0;
-  left: -40%;
+    left: -450px;
   background-color: #FFF;
   z-index: 2;
-  width: 40%;
+    width: 450px;
   height: 100%;
   transition: all .3s ease-in;
   box-shadow: 2px 0 2px rgba(0, 0, 0, 0.3); }
   .menu.opened {
-    transform: translateX(100%); }
+      transform: translateX(450px);
+  }
 
 .menu-header {
   padding: 120px 16px 16px 16px;
@@ -102,13 +103,40 @@ h1 {
   color: #ffffff;
   font-size: 2.5em; }
 
-.menu-links nav {
-  color: #35495E;
-  padding: 16px; }
+.transition-slow, .menu-links:before {
+    transition: all .3s ease-in-out;
+}
 
-.menu-links nav:hover {
-  background: #CFCFCF;
-  cursor: pointer; }
+.menu-links {
+  color: #35495E;
+    cursor: pointer;
+    position: relative;
+    opacity: .8;
+}
+
+.menu-links:before {
+    position: absolute;
+    bottom: -1px;
+    transform: scale(0);
+    content: '';
+    background-color: #41B883;
+    width: 100%;
+    height: 3px;
+}
+
+.menu-links:hover, .menu-links:focus {
+    opacity: 1;
+    outline: none;
+    color: #35495E;
+}
+
+.menu-links:hover:before, .menu-links:focus:before {
+    transform: scale(1);
+}
+
+.menu-links nav {
+    padding: 16px;
+}
 
 .user, .user-top {
   display: flex;
@@ -233,8 +261,14 @@ h1 {
 
 @media screen and (max-width: 650px) {
   .menu {
-    left: -82%;
-    width: 80%; }
+      left: -92%;
+      width: 90%;
+      max-width: 100%;
+  }
+
+    .menu.opened {
+        transform: translateX(100%);
+    }
 
   .item {
     padding: 8px; }

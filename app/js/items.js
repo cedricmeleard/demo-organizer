@@ -1,34 +1,31 @@
-/**
- * Created by cedric on 22/04/16.
- */
 function Items(io, markdown, Models) {
-    var Item = Models.Item, Sprint = Models.Sprint;
+    const Item = Models.Item, Sprint = Models.Sprint;
     //connected users, not persisted
-    var users = [];//user { name, photo, id(google), connectionIds([socket.io]) }
+    const users = [];//user { name, photo, id(google), connectionIds([socket.io]) }
 
-    io.on('connection', function (socket) {
+    io.on('connection', socket => {
         //retrieve all items first
         sendItems();
         sendSprints();
 
         console.log('user connection start');
 
-        socket.on('disconnect', function () {
+        socket.on('disconnect', () => {
             //remove user with socket.id from the list
-            var user = users.getByProperty('connectionIds', socket.id);
+            const user = users.getByProperty('connectionIds', socket.id);
             if (user) {
-                var connectionIndex = user.connectionIds.indexOf(socket.id);
+                const connectionIndex = user.connectionIds.indexOf(socket.id);
                 user.connectionIds.splice(connectionIndex, 1);
                 if (user.connectionIds.length === 0) {
-                    var index = users.indexOf(user);
+                    const index = users.indexOf(user);
                     users.splice(index, 1);
                 }
                 sendUsers();
             }
         });
 
-        socket.on('user connected', function (user) {
-            var exists = users.getById(user.id);
+        socket.on('user connected', user => {
+            let exists = users.getById(user.id);
             if (!exists) {
                 users.push(user);
                 exists = user;
@@ -40,17 +37,17 @@ function Items(io, markdown, Models) {
             sendUsers();
         });
 
-        socket.on('item create', function (item) {
-            //change others item position, our new item will be positionned on first place
+        socket.on('item create', item => {
+            //change others item position, our new item will be positioned on first place
             incrementPosition(0);
-            //prepare remaining datas - will change when database ok
+            //prepare remaining data - will change when database ok
             prepareItem(item);
 
             saveItem(item, sendItems);
         });
 
-        socket.on('item updated', function (item) {
-            Item.findById(item._id, function (err, change) {
+        socket.on('item updated', item => {
+            Item.findById(item._id, (err, change) => {
                 if (err) console.error(err);
 
                 change.description = item.description;
@@ -60,19 +57,19 @@ function Items(io, markdown, Models) {
             });
         });
 
-        socket.on('item positioned', function (move) {
+        socket.on('item positioned', move => {
 
-            Item.findOne({position: move.to}, function (err, temp) {
+            Item.findOne({position: move.to}, (err, temp) => {
                 if (err) console.error(err);
 
-                Item.findOne({position: move.from}, function (err, item) {
+                Item.findOne({position: move.from}, (err, item) => {
                     if (err) console.error(err);
                     //invert position
                     if (temp && item) {
                         item.position = move.to;
                         temp.position = move.from;
 
-                        item.save(function () {
+                        item.save(() => {
                             temp.save(sendItems);
                         });
                     }
@@ -80,21 +77,21 @@ function Items(io, markdown, Models) {
             });
         });
 
-        socket.on('item deleted', function (itemId) {
+        socket.on('item deleted', itemId => {
             deleteItem(itemId, sendItems);
         });
 
-        socket.on('item affected', function (data) {
+        socket.on('item affected', data => {
             Item.findById(data._id,
-                function (err, change) {
+                (err, change) => {
                     if (err) console.log(err);
 
-                    if (change.affected == null)
+                    if (change.affected === null)
                         change.affected = [];
-                    var found = false;
-                    var i;
-                    for (i = 0; i < change.affected.length; i++) {
-                        if (change.affected[i].id == data.user.id) {
+
+                    let found = false;
+                    for (let i = 0; i < change.affected.length; i++) {
+                        if (change.affected[i].id === data.user.id) {
                             found = true;
                             break;
                         }
@@ -106,23 +103,23 @@ function Items(io, markdown, Models) {
                 });
         });
 
-        socket.on('item unaffected', function (itemId, idUser) {
-            Item.findById(itemId, function (err, change) {
+        socket.on('item unaffected', (itemId, idUser) => {
+            Item.findById(itemId, (err, change) => {
                 if (err) console.error(err);
 
-                var user = change.affected.getById(idUser);
-                var i = change.affected.indexOf(user);
-                if (i != -1) {
+                const user = change.affected.getById(idUser);
+                const i = change.affected.indexOf(user);
+                if (i !== -1) {
                     change.affected.splice(i, 1);
                 }
                 updateItem(change, sendItems);
             });
         });
 
-        socket.on('create archive', function (data) {
+        socket.on('create archive', data => {
             //data { name : 'sprint name' }
             new Sprint({name: data.name})
-                .save().then(function (saved) {
+                .save().then(saved => {
                 Item.update(
                     {sprint: null},
                     {sprint: saved._id},
@@ -135,7 +132,7 @@ function Items(io, markdown, Models) {
             });
         });
 
-        socket.on('load archive', function (sprintId) {
+        socket.on('load archive', sprintId => {
             Item.find({sprint: sprintId})
                 .sort('position')
                 .exec((err, items) => {
@@ -144,9 +141,9 @@ function Items(io, markdown, Models) {
                 });
         });
     });
-    
+
     function saveItem(item, callback) {
-        var mongoItem = new Item(
+        const mongoItem = new Item(
             {
                 source: item.source,
                 text: item.text,
@@ -154,14 +151,14 @@ function Items(io, markdown, Models) {
                 position: item.position
             });
 
-        mongoItem.save(function (err) {
+        mongoItem.save(err => {
             if (err) console.error(err);
             if (callback) callback();
         });
     }
 
     function updateItem(item, callback) {
-        Item.findById(item._id, function (err, doc) {
+        Item.findById(item._id, (err, doc) => {
             if (err) console.error(err);
 
             //prepare and update
@@ -177,23 +174,20 @@ function Items(io, markdown, Models) {
     }
 
     function deleteItem(itemId, callback) {
-        Item.findById({'_id': itemId}).then(function (item) {
+        Item.findById({'_id': itemId}).then(item => {
             Item.update(
                 {position: {$gt: item.position}},
                 {$inc: {position: -1}},
                 {multi: true},
-                function (err) {
+                err => {
                     if (err) console.error(err);
 
                     if (callback) callback();
                 });
-        }).then(function () {
+        }).then(
             Item.remove({'_id': itemId})
-                .then(function (item) {
-                    console.log('removing');
-
-                });
-        });
+                .then(console.log('removing'))
+        );
     }
 
     function sendItems() {
@@ -201,9 +195,9 @@ function Items(io, markdown, Models) {
         Item.find({sprint: null})
             .sort('position')
             .exec((err, items) => {
-            if (err) return console.error(err);
+                if (err) return console.error(err);
                 io.emit('send items', items);
-        });
+            });
     }
 
     function sendSprints() {
@@ -211,7 +205,6 @@ function Items(io, markdown, Models) {
             .sort('name')
             .exec((err, sprints) => {
                 if (err) console.error(err);
-
                 io.emit('load sprints', sprints);
             });
     }
@@ -235,9 +228,9 @@ function Items(io, markdown, Models) {
 
     //increment position index
     function incrementPosition(index) {
-        Item.find(function (err, elements) {
+        Item.find((err, elements) => {
             //move all items position +1
-            for (var i = 0; i < elements.length; i++) {
+            for (let i = 0; i < elements.length; i++) {
                 if (elements[i].position >= index) {
                     elements[i].position++;
                     elements[i].save();
@@ -248,7 +241,7 @@ function Items(io, markdown, Models) {
 
     //extract item from list using id
     function getById(id) {
-        for (var i = 0; i < this.length; i++) {
+        for (let i = 0; i < this.length; i++) {
             if (this[i].id === id) return this[i];
         }
         return null;
@@ -257,12 +250,12 @@ function Items(io, markdown, Models) {
     //extract item from list using any unique value
     function getByProperty(key, value) {
 
-        for (var i = 0; i < this.length; i++) {
+        for (let i = 0; i < this.length; i++) {
             if (!this[i].hasOwnProperty(key)) {
                 console.warn('invalid property : ' + key + ' for object : ' + typeof this[i]);
                 continue;
             }
-            if (this[i][key].indexOf(value) != -1)
+            if (this[i][key].indexOf(value) !== -1)
                 return this[i];
         }
         return null;

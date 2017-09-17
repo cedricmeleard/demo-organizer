@@ -1,20 +1,13 @@
-var socket = io();
-
-var app = new Vue({
+const socket = io();
+const app = new Vue({
     el: '#organizerContainer',
     data: {
         socketIO: socket,
         users: []
     },
     methods: {
-        init: function () {
-            socket.emit('connect');
-        }
+        init: () => socket.emit('connect')
     }
 });
-
-socket.on('users changed', function (items) {
-    app.users = items;
-});
-
+socket.on('users changed', items => app.users = items);
 app.init();

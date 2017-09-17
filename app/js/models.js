@@ -1,9 +1,6 @@
-/**
- * Created by CMeleard on 12/09/2016.
- */
 function Models(mongoose) {
     //item { id, source, text, description, users linked, transformed text }
-    var itemSchema = mongoose.Schema({
+    const itemSchema = mongoose.Schema({
         source: String,
         text: String,
         description: String,
@@ -14,7 +11,7 @@ function Models(mongoose) {
     });
 
     //sprint { id, name }
-    var sprintSchema = mongoose.Schema({
+    const sprintSchema = mongoose.Schema({
         name: String
     });
 

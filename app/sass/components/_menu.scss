@@ -26,16 +26,16 @@
 .menu {
   position: fixed;
   top: 0;
-  left: -40%;
+  left: -450px;
   background-color: #FFF;
   z-index: 2;
-  width: 40%;
+  width: 450px;
   height: 100%;
   transition: all .3s ease-in;
   box-shadow: 2px 0 2px rgba(0, 0, 0, .3);
 
   &.opened {
-    transform: translateX(100%);
+    transform: translateX(450px);
   }
 }
 
@@ -58,12 +58,41 @@
   font-size: 2.5em;
 }
 
-.menu-links nav {
-  color: $accent-color;
-  padding: 16px;
+.transition-slow {
+  transition: all .3s ease-in-out;
 }
 
-.menu-links nav:hover {
-  background: #CFCFCF;
+.menu-links {
+  color: $accent-color;
+
   cursor: pointer;
+
+  position: relative;
+  opacity: .8;
+
+  &:before {
+    @extend .transition-slow;
+
+    position: absolute;
+    bottom: -1px;
+    transform: scale(0);
+    content: '';
+    background-color: $primary-color;
+    width: 100%;
+    height: 3px;
+  }
+
+  &:hover, &:focus {
+    opacity: 1;
+    outline: none;
+    color: $accent-color;
+    &:before {
+      transform: scale(1);
+    }
+  }
+
+  nav {
+    padding: 16px;
+  }
 }
+

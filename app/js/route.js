@@ -2,8 +2,8 @@
  * Created by cedric on 09/05/16.
  */
 function route(app) {
-    var session = require('express-session');
-    var passport = require('passport');
+    const session = require('express-session');
+    const passport = require('passport');
     // API Access link for creating client ID and secret:
     app.use(session({ secret: 'keyboard cat' }));
     // Initialize Passport!  Also use passport.session() middleware, to support
@@ -11,36 +11,37 @@ function route(app) {
     app.use(passport.initialize());
     app.use(passport.session());
     //load configuration client_Id and client_Secret
-    var config = require('./config').googleAuth;
-    var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+    const config = require('./config').googleAuth;
+    const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
     passport.use(new GoogleStrategy({
             clientID: config.GOOGLE_CLIENT_ID,
             clientSecret: config.GOOGLE_CLIENT_SECRET,
             callbackURL : config.GOOGLE_CALLBACK_URL,
         },
-        function(accessToken, refreshToken, profile, done) {
-            process.nextTick(function () {
+        (accessToken, refreshToken, profile, done) => {
+            process.nextTick(() => {
                 return done(null, profile);
             });
         }
     ));
-    passport.serializeUser(function(user, done) {
-        done(null, user);
-    });
-    passport.deserializeUser(function(user, done) {
+    passport.serializeUser((user, done) => {
         done(null, user);
     });
 
-    app.get('/login', function(req, res, next) {
+    passport.deserializeUser((user, done) => {
+        done(null, user);
+    });
 
+    app.get('/login', (req, res, next) => {
         res.sendFile(__dirname + '/views/login.html');
     });
 
     app.get('/auth/google', passport.authenticate('google',
         { scope: ['https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'] }),
-        function(req, res){} // this never gets called
+        (req, res) => {
+        } // this never gets called
     );
 
     app.get('/oauth2callback', passport.authenticate('google',
@@ -53,7 +54,7 @@ function route(app) {
         return next();
     }
     app.use('/print', publicViewable);
-    app.get('/print', function (req, res) {
+    app.get('/print', (req, res) => {
         res.render(__dirname + '/views/print.html');
     });
 
@@ -66,26 +67,26 @@ function route(app) {
 
     app.use('/home', ensureAuthenticated);
     //serve user view, this will display quiz
-    app.get('/home', function (req, res) {
+    app.get('/home', (req, res) => {
         res.render(__dirname + '/views/index.html', { user : JSON.stringify( new User(req.user) ) } );
     });
 
     app.use('/create', ensureAuthenticated);
-    app.get('/create', function (req, res) {
+    app.get('/create', (req, res) => {
         res.render(__dirname + '/views/create.html', { user : JSON.stringify( new User(req.user) ) } );
     });
 
     app.use('/users', ensureAuthenticated);
-    app.get('/users', function (req, res) {
+    app.get('/users', (req, res) => {
         res.render(__dirname + '/views/users.html', { user : JSON.stringify( new User(req.user) ) } );
     });
 
     app.use('/archive', ensureAuthenticated);
-    app.get('/archive', function (req, res) {
+    app.get('/archive', (req, res) => {
         res.render(__dirname + '/views/archive.html', {user: JSON.stringify(new User(req.user))});
     });
 
-    app.use('*', function (req, res) {
+    app.use('*', (req, res) => {
         res.redirect('/home');
     });
 
