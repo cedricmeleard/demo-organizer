@@ -14,7 +14,7 @@
     "ejs": "^2.4.1",
     "express": "^4.13.3",
     "express-session": "^1.13.0",
-    "jquery": "^2.2.3",
+    "jquery": "^3.0.0",
     "knockout": "^3.4.0",
     "markdown-it": "^7.0.1",
     "mongoose": "^4.7.2",
